@@ -23,6 +23,7 @@ function App() {
             <div>
               <h3>{p.title}</h3>
               <img src={p.image} alt='imagen' width="300"/>
+              <img src={p.image} alt='imagen' width="300"/>
             </div>
           )
         })}

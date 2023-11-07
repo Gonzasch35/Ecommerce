@@ -13,4 +13,13 @@ const getProductos = async (req, res) => {
     }
 }
 
+const postProducto = async (req, res) => {
+    try {
+        const {nombre, imagen, precio, talle, color, categoria, descripcion} = req.body
+        
+    } catch (error) {
+        res.status(400).json({error: error.message})
+    }
+}
+
 module.exports = getProductos

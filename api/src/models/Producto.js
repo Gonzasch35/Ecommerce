@@ -6,8 +6,8 @@ module.exports = (sequelize) => {
   sequelize.define('producto', {
     id: {
       type: DataTypes.INTEGER,
-      defaultValue: DataTypes.UUIDV4,
       primaryKey: true,
+      autoIncrement: true,
     },
     nombre: {
       type: DataTypes.STRING,

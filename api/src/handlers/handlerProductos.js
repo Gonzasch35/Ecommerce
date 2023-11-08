@@ -16,8 +16,8 @@ const getProductos = async (req, res) => {
 
 const postProducto = async (req, res) => {
     try {
-        const {nombre, imagen, precio, talle, color, categoria, descripcion} = req.body
-        const producto = await Producto.create({ nombre, imagen, precio, talle, color, categoria, descripcion})
+        const {nombre, imagen, precio, talle, color, descripcion, categoryId} = req.body
+        const producto = await Producto.create({ nombre, imagen, precio, talle, color, descripcion, categoryId})
         if(!producto) throw Error('Producto no creado')
         res.status(200).json({message: 'Producto creado'})
     } catch (error) {

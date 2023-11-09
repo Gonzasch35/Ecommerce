@@ -39,6 +39,9 @@ Producto.belongsTo(Category);
 User.hasMany(Venta);
 Venta.belongsTo(User);
 
+Venta.belongsTo(Producto)
+Producto.hasMany(Venta)
+
 
 
 module.exports = {

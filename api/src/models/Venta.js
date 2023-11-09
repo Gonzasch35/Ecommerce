@@ -13,11 +13,15 @@ module.exports = (sequelize) => {
             allowNull: false,
         },
         precio: {
-            type: DataTypes.INTEGER,
+            type: DataTypes.DECIMAL,
             allowNull: false,
         },
         descuento: {
             type: DataTypes.INTEGER,
+        },
+        fecha: {
+            type: DataTypes.DATE,
+            allowNull: false,
         }
-    })
+    }, { timestamps: false })
 }

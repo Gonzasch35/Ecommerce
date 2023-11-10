@@ -20,6 +20,14 @@ module.exports = (sequelize) => {
             type: DataTypes.STRING,
             allowNull: false
         },
+        phone: {
+            type: DataTypes.STRING,
+            allowNull: true,
+        },
+        admin: {
+            type: DataTypes.BOOLEAN,
+            defaultValue: false,
+        },
         token: {
             type: DataTypes.STRING,
         },

@@ -1,4 +1,5 @@
 const {User} = require('../db')
+const generarId = require('../helpers/generarId')
 
 const getAllUsers = async (req,res) => {
     try {
@@ -13,9 +14,10 @@ const getAllUsers = async (req,res) => {
 const postUser = async (req,res) => {
     const {name, email, password, phone, address} = req.body
     try {
-        const findOne = await User.findAll({where: {email}})
+        const findOne = await User.findOne({where: {email}})
         if(findOne) throw Error('El email ingresado ya esta registrado')
-        await User.create({name, email, password, phone, address})
+        const token = generarId()
+        await User.create({name, email, password, phone, address, token})
         res.status(200).json('Usuario creado con exito')
     } catch (error) {
         res.status(400).json({error: error.message})
@@ -46,10 +48,19 @@ const deleteUser = async (req,res) => {
     }
 }
 
+const loginUser = async (req, res) => {
+    try {
+        
+    } catch (error) {
+        
+    }
+}
+
 module.exports = {
     getAllUsers,
     postUser,
     updateUser,
     getUser,
-    deleteUser
+    deleteUser,
+    loginUser
 }

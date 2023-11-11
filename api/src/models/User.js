@@ -1,8 +1,9 @@
 const {DataTypes} = require('sequelize')
+const bcrypt = require('bcrypt')
 
 module.exports = (sequelize) => {
 
-    sequelize.define('user', {
+    const User = sequelize.define('user', {
         id: {
            type: DataTypes.INTEGER,
            primaryKey: true,
@@ -36,4 +37,20 @@ module.exports = (sequelize) => {
             defaultValue: false,
         }
     }, { timestamps: false })
-}
+
+    User.beforeCreate(async (user) => {
+        const saltRounds = 10; // Número de rounds de hashing (mayor es más seguro pero más lento)
+        const hashedPassword = await bcrypt.hash(user.password, saltRounds);
+        user.password = hashedPassword;
+      });
+    
+      User.beforeUpdate(async (user) => {
+        if (user.changed('password')) {
+          const saltRounds = 10;
+          const hashedPassword = await bcrypt.hash(user.password, saltRounds);
+          user.password = hashedPassword;
+        }
+      });
+
+      return User;
+};

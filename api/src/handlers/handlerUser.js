@@ -41,10 +41,12 @@ const getUser = async (req,res) => {
 }
 
 const deleteUser = async (req,res) => {
+    const {id} = req.param
     try {
         
-    } catch (error) {
         
+    } catch (error) {
+        res.status(400).json({error: error.message})
     }
 }
 

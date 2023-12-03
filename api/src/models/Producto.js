@@ -29,6 +29,14 @@ module.exports = (sequelize) => {
       type: DataTypes.STRING,
       allowNull: false,
     },
+    stock: {
+      type: DataTypes.INTEGER,
+      defautValue: 0
+    },
+    genero: {
+      type: DataTypes.ENUM('hombre', 'mujer', 'niños', 'unisex'),
+      allowNull: false,
+    },
     descripcion: {
       type: DataTypes.STRING,
       allowNull: false,

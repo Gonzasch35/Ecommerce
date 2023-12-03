@@ -42,7 +42,8 @@ Venta.belongsTo(User);
 Venta.belongsTo(Producto)
 Producto.hasMany(Venta)
 
-
+User.belongsToMany(Producto, {through: 'user_favorito'})
+Producto.belongsToMany(User, {through: 'user_favorito'})
 
 module.exports = {
   ...sequelize.models, // para poder importar los modelos así: const { Product, User } = require('./db.js');

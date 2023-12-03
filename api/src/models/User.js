@@ -35,7 +35,7 @@ module.exports = (sequelize) => {
         confirm: {
             type: DataTypes.BOOLEAN,
             defaultValue: false,
-        }
+        },
     }, { timestamps: false })
 
     User.beforeCreate(async (user) => {

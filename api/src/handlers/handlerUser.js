@@ -1,9 +1,15 @@
-const {User} = require('../db')
+const {User, Producto} = require('../db')
 const generarId = require('../helpers/generarId')
 
 const getAllUsers = async (req,res) => {
     try {
-        const users = await User.findAll()
+        const users = await User.findAll({
+            include: [
+                {
+                  model: Producto,
+                }
+              ]
+        })
         if(!users) throw Error('No hay usuarios registrados')
         res.status(200).json(users)
     } catch (error) {
@@ -33,8 +39,17 @@ const updateUser = async (req, res) => {
 }
 
 const getUser = async (req,res) => {
+    const {id} = req.params
     try {
-        
+        const findUser = await User.findByPk(id, {
+            include: [
+                {
+                  model: Producto,
+                }
+              ]
+        })
+        if(!findUser) throw Error('No existe el usuario con ese id')
+        res.status(200).json(findUser)
     } catch (error) {
         
     }
@@ -58,11 +73,37 @@ const loginUser = async (req, res) => {
     }
 }
 
+const addFavorito = async (req, res) => {
+    const {id} = req.params
+    const {productoId} = req.body
+    try {
+        const usuario = await User.findByPk(id)
+        if(!usuario) throw Error('No existe el usuario')
+
+        const findProducto = await Producto.findByPk(productoId)
+        if(!findProducto) throw Error('No existe el producto')
+
+        const add = await usuario.addProductos(findProducto)
+        if(!add) {
+            await usuario.removeProductos(findProducto)
+            res.status(200).json('Producto eliminado de favoritos')
+        } else {
+            res.status(200).json('Producto agregado a favoritos')
+        }
+
+
+    } catch (error) {
+        res.status(400).json({error: error.message})
+    }
+}
+
+
 module.exports = {
     getAllUsers,
     postUser,
     updateUser,
     getUser,
     deleteUser,
-    loginUser
+    loginUser,
+    addFavorito
 }

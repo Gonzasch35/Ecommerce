@@ -22,8 +22,20 @@ module.exports = (sequelize) => {
       allowNull: false,
     },
     talle: {
-      type: DataTypes.ARRAY(DataTypes.STRING),
+      type: DataTypes.JSON,
       allowNull: false,
+      validate: {
+        // Validación personalizada para asegurar que solo hay claves específicas y valores numéricos
+        esTalleValido(value) {
+          const allowedSizes = ['xxl', 'xl', 'xs', 'm', 's', 'l'];
+
+          for (const key in value) {
+            if (!allowedSizes.includes(key) || typeof value[key] !== 'number') {
+              throw new Error('El campo "talle" tiene un formato no válido.');
+            }
+          }
+        },
+      }
     },
     color: {
       type: DataTypes.STRING,
@@ -33,13 +45,11 @@ module.exports = (sequelize) => {
       type: DataTypes.INTEGER,
       defautValue: 0
     },
-    genero: {
-      type: DataTypes.ENUM('hombre', 'mujer', 'niños', 'unisex'),
-      allowNull: false,
-    },
     descripcion: {
       type: DataTypes.STRING,
       allowNull: false,
     }
-  }, { timestamps: false });
+  },
+  { paranoid: true },
+  { timestamps: false });
 };

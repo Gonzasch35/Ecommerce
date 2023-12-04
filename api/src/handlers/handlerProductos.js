@@ -16,7 +16,13 @@ const getProductos = async (req, res) => {
 
 const postProducto = async (req, res) => {
     try {
-        const {nombre, imagen, precio, talle, color, descripcion, genero, stock, categoryId} = req.body
+        const {nombre, imagen, precio, talle, color, descripcion, genero, categoryId} = req.body
+        let stock = 0 
+        for (let key in talle) {
+            if (talle.hasOwnProperty(key)) {
+              stock += talle[key];
+            }
+        }
         const producto = await Producto.create({ nombre, imagen, precio, talle, color, descripcion, genero, stock, categoryId})
         if(!producto) throw Error('Producto no creado')
         res.status(200).json({message: 'Producto creado'})
@@ -50,8 +56,24 @@ const updateProducto = async (req, res) => {
     }
 }
 
+const deleteProducto = async (req, res) => {
+    const {id} = req.params
+    try {
+        const deleteProducto = await Producto.destroy({
+            where: {
+              id: id,
+            },
+        })
+        if(!deleteProducto) throw Error('El producto no existe')
+        res.status(200).json('Producto borrado')
+    } catch (error) {
+        res.status(400).json({error: error.message})
+    }
+}
+
 module.exports = {
     getProductos,
     postProducto,
-    updateProducto
+    updateProducto,
+    deleteProducto
 }

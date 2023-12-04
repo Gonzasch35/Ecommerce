@@ -36,7 +36,9 @@ module.exports = (sequelize) => {
             type: DataTypes.BOOLEAN,
             defaultValue: false,
         },
-    }, { timestamps: false })
+    },
+    { paranoid: true },
+    { timestamps: false })
 
     User.beforeCreate(async (user) => {
         const saltRounds = 10; // Número de rounds de hashing (mayor es más seguro pero más lento)

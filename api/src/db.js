@@ -39,8 +39,8 @@ Producto.belongsTo(Category);
 User.hasMany(Venta);
 Venta.belongsTo(User);
 
-Venta.belongsTo(Producto)
-Producto.hasMany(Venta)
+Venta.belongsToMany(Producto, {through: 'venta_producto'})
+Producto.belongsToMany(Venta, {through: 'venta_producto'})
 
 User.belongsToMany(Producto, {through: 'user_favorito'})
 Producto.belongsToMany(User, {through: 'user_favorito'})

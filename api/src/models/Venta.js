@@ -8,16 +8,17 @@ module.exports = (sequelize) => {
             primaryKey: true,
             autoIncrement: true,
         },
-        cantidad: {
-            type: DataTypes.INTEGER,
-            allowNull: false,
-        },
         precio: {
             type: DataTypes.DECIMAL,
             allowNull: false,
         },
         descuento: {
             type: DataTypes.INTEGER,
+            defaultValue: 0,
+        },
+        total: {
+            type: DataTypes.DECIMAL,
+            allowNull: false,
         },
         fecha: {
             type: DataTypes.DATE,

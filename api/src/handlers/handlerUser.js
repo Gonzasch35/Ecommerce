@@ -1,5 +1,6 @@
 const {User, Producto} = require('../db')
 const generarId = require('../helpers/generarId')
+const generateJWT = require('../helpers/generateJWT')
 
 const getAllUsers = async (req,res) => {
     try {
@@ -84,7 +85,8 @@ const loginUser = async (req, res) => {
                 name: user.name,
                 email: user.email,
                 admin: user.admin,
-                phone: user.phone
+                phone: user.phone,
+                token: generateJWT(user.id)
             })
         } else throw Error('El password es incorrecto')
 
@@ -118,6 +120,38 @@ const addFavorito = async (req, res) => {
     }
 }
 
+const confirmUser = async (req,res) => {
+    const {token} = req.params
+    try {
+        const userConfirm = await User.findOne({where: {token: token}})
+        if(!userConfirm) throw Error('Token no válido')
+
+        userConfirm.confirm = true
+        userConfirm.token = ''
+        await userConfirm.save()
+
+        res.status(200).json('Usuario confirmado correctamente')
+    } catch (error) {
+        res.status(400).json({error: error.message})
+    }
+}
+
+const cambiarPassword = async (req, res) => {
+    const {email} = req.body
+    try {
+        const user = await User.findOne({where: {email: email}})
+        // Confirmar si el usuario existe
+        if(!user) throw Error('Email incorrecto')
+        
+        user.token = generarId()
+        await user.save()
+        
+    } catch (error) {
+        res.status(400).json({error: error.message})
+        
+    }
+}
+
 
 module.exports = {
     getAllUsers,
@@ -126,5 +160,7 @@ module.exports = {
     getUser,
     deleteUser,
     loginUser,
-    addFavorito
+    addFavorito,
+    confirmUser,
+    cambiarPassword
 }

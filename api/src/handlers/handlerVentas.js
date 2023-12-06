@@ -1,12 +1,15 @@
+const {createVenta} = require('../controllers/controllersVentas')
+
 const getVentas = async (req,res) => {
 
 }
 
 
 const postVenta = async (req,res) => {
-    const {productosId} = req.body
+    const {productos, descuento, userId} = req.body
     try {
-        res.status(200).json(productosId)
+        const venta = await createVenta({productos, descuento, userId})
+        res.status(200).json(venta)
     } catch (error) {
         res.status(400).json({error: error.message})
     }

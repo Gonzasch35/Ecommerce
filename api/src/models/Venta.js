@@ -8,10 +8,6 @@ module.exports = (sequelize) => {
             primaryKey: true,
             autoIncrement: true,
         },
-        precio: {
-            type: DataTypes.DECIMAL,
-            allowNull: false,
-        },
         descuento: {
             type: DataTypes.INTEGER,
             defaultValue: 0,
@@ -21,7 +17,7 @@ module.exports = (sequelize) => {
             allowNull: false,
         },
         fecha: {
-            type: DataTypes.DATE,
+            type: DataTypes.STRING,
             allowNull: false,
         }
     }, { timestamps: false })

@@ -1,4 +1,4 @@
-const dateNow = () => {
+const sacarFecha = () => {
     const fecha = new Date()
     const año = fecha.getFullYear()
     const mes = fecha.getMonth() + 1
@@ -7,4 +7,4 @@ const dateNow = () => {
     return dia + '/' + mes + '/' + año
 }
 
-console.log(dateNow());
+module.exports = sacarFecha

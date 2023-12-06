@@ -4,6 +4,7 @@ const generarId = require('../helpers/generarId')
 const getAllUsers = async (req,res) => {
     try {
         const users = await User.findAll({
+            attributes: ['id', 'name', 'email', 'phone', 'admin'],
             include: [
                 {
                   model: Producto,
@@ -67,9 +68,29 @@ const deleteUser = async (req,res) => {
 
 const loginUser = async (req, res) => {
     try {
-        
+        const {email, password} = req.body
+
+        const user = await User.findOne({where: {email: email}})
+        // Confirmar si el usuario existe
+        if(!user) throw Error('Email incorrecto')
+
+        // Comprobar si el usuario esta confirmado
+        // if(!user.confirm) throw Error('La cuenta no esta confirmado')
+
+        // Comprobar su password
+        if(await user.comparePassword(password)) {
+            res.status(200).json({
+                id: user.id,
+                name: user.name,
+                email: user.email,
+                admin: user.admin,
+                phone: user.phone
+            })
+        } else throw Error('El password es incorrecto')
+
+
     } catch (error) {
-        
+        res.status(400).json({error: error.message})
     }
 }
 

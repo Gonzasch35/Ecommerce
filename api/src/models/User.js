@@ -46,13 +46,17 @@ module.exports = (sequelize) => {
         user.password = hashedPassword;
       });
     
-      User.beforeUpdate(async (user) => {
+    User.beforeUpdate(async (user) => {
         if (user.changed('password')) {
           const saltRounds = 10;
           const hashedPassword = await bcrypt.hash(user.password, saltRounds);
           user.password = hashedPassword;
         }
-      });
+    });
 
-      return User;
+    User.prototype.comparePassword = async function (password) {
+        return await bcrypt.compare(password, this.password);
+    };
+
+    return User;
 };

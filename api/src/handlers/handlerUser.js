@@ -5,7 +5,7 @@ const generateJWT = require('../helpers/generateJWT')
 const getAllUsers = async (req,res) => {
     try {
         const users = await User.findAll({
-            attributes: ['id', 'name', 'email', 'phone', 'admin'],
+            attributes: ['id', 'name', 'email', 'phone', 'admin', 'token'],
             include: [
                 {
                   model: Producto,
@@ -145,13 +145,50 @@ const cambiarPassword = async (req, res) => {
         
         user.token = generarId()
         await user.save()
-        
+        res.status(200).json('Se te ha enviado un email con instrucciones')
     } catch (error) {
         res.status(400).json({error: error.message})
-        
     }
 }
 
+const restartPassword = async (req,res) => {
+    const { token } = req.params
+    try {
+        const tokenConfirm = await User.findOne({where: {token: token}})
+        if(!tokenConfirm) throw Error('Token no válido')
+
+        res.status(200).json('Token válido')
+    } catch (error) {
+        res.status(400).json({error: error.message})
+    }
+}
+
+const newPassword = async (req,res) => {
+    const { token } = req.params
+    const {password} = req.body
+    try {
+        const user = await User.findOne({where: {token: token}})
+        if(!user) throw Error('Token no válido')
+
+        user.password = password
+        user.token = ''
+        await user.save()
+
+        res.status(200).json('Contraseña actualizada')
+        
+    } catch (error) {
+        res.status(400).json({error: error.message})
+    }
+}
+
+const perfil = async (req, res) => {
+    const {hola} = req.body
+    try {
+        
+    } catch (error) {
+        res.status(400).json({error: error.message})
+    }
+}
 
 module.exports = {
     getAllUsers,
@@ -162,5 +199,8 @@ module.exports = {
     loginUser,
     addFavorito,
     confirmUser,
-    cambiarPassword
+    cambiarPassword,
+    restartPassword,
+    newPassword,
+    perfil
 }

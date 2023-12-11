@@ -1,33 +1,34 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import {Route, Routes} from 'react-router-dom'
 import './App.css'
+import axios from 'axios'
+import Login from './pages/Login'
+import AuthLayout from './layouts/AuthLayout'
+import Register from './pages/Register'
+import ForgotPass from './pages/ForgotPass'
+import RestartPass from './pages/RestartPass'
+import ConfirmAccount from './pages/ConfirmAccount'
 
 function App() {
-  const [count, setCount] = useState(0)
+  
+  const [productos, setProductos] = useState([])
+
+  const handlerProductos = async () => {
+    const products = await axios.get('http://localhost:3001/productos')
+    setProductos(products.data)
+  }
 
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+    <> 
+      <Routes>
+        <Route path='/' element={<AuthLayout />} >
+          <Route index element={<Login />}/>
+          <Route path='registrar' element={<Register />}/>
+          <Route path='olvide-password' element={<ForgotPass />}/>
+          <Route path='confirm/:id' element={<ConfirmAccount />}/>
+          <Route path='olvide-password/:token' element={<RestartPass />}/>
+        </Route>
+      </Routes>
     </>
   )
 }

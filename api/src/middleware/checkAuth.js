@@ -16,11 +16,10 @@ const checkAuth = async (req, res, next) => {
             console.log(req.usuario);
             if(!req.usuario) {
                 throw Error('No se encontro al usuario')
-            } 
-            res.json(req.usuario)
+            }
         return next()
         } catch (error) {
-            res.status(400).json({error: error.message})
+            res.status(400).json({error: 'Hubo un error'})
         }
     }
     if(!token) {

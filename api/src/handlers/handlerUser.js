@@ -182,9 +182,9 @@ const newPassword = async (req,res) => {
 }
 
 const perfil = async (req, res) => {
-    const {hola} = req.body
+    const {usuario} = req
     try {
-        
+        res.status(200).json(usuario)
     } catch (error) {
         res.status(400).json({error: error.message})
     }

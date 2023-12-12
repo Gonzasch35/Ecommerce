@@ -23,7 +23,7 @@ const postUser = async (req,res) => {
     const {name, email, password, phone, address} = req.body
     try {
         const findOne = await User.findOne({where: {email}})
-        if(findOne) throw Error('El email ingresado ya esta registrado')
+        if(findOne) throw Error('Ya existe una cuenta con ese email')
         const token = generarId()
         await User.create({name, email, password, phone, address, token})
         res.status(200).json('Usuario creado con exito')
@@ -36,7 +36,7 @@ const updateUser = async (req, res) => {
     try {
         
     } catch (error) {
-        
+        res.status(400).json({error: error.message})
     }
 }
 
@@ -53,7 +53,7 @@ const getUser = async (req,res) => {
         if(!findUser) throw Error('No existe el usuario con ese id')
         res.status(200).json(findUser)
     } catch (error) {
-        
+        res.status(400).json({error: error.message})
     }
 }
 

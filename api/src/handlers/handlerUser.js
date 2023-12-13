@@ -1,5 +1,5 @@
 const {User, Producto} = require('../db')
-const emailRegistro = require('../helpers/email')
+const {emailRegistro, recuperarPass} = require('../helpers/email')
 const generarId = require('../helpers/generarId')
 const generateJWT = require('../helpers/generateJWT')
 
@@ -155,6 +155,13 @@ const cambiarPassword = async (req, res) => {
         
         user.token = generarId()
         await user.save()
+
+        recuperarPass({
+            name: user.name,
+            email: user.email,
+            token: user.token
+        })
+
         res.status(200).json('Se te ha enviado un email con instrucciones')
     } catch (error) {
         res.status(400).json({error: error.message})

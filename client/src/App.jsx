@@ -8,6 +8,9 @@ import Register from './pages/Register'
 import ForgotPass from './pages/ForgotPass'
 import RestartPass from './pages/RestartPass'
 import ConfirmAccount from './pages/ConfirmAccount'
+import { ToastContainer } from "react-toastify"
+
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
   
@@ -29,6 +32,7 @@ function App() {
           <Route path='olvide-password/:token' element={<RestartPass />}/>
         </Route>
       </Routes>
+      <ToastContainer />
     </>
   )
 }

@@ -26,4 +26,33 @@ const emailRegistro = async (datos) => {
       })
 }
 
-module.exports = emailRegistro
+const recuperarPass = async (datos) => {
+    const {email, name, token} = datos
+
+    const transport = nodemailer.createTransport({
+        host: "sandbox.smtp.mailtrap.io",
+        port: 2525,
+        auth: {
+          user: "c3e36be665e232",
+          pass: "e7feed1ec14f29"
+        }
+      });
+
+      const info = await transport.sendMail({
+        from: 'Ecommerce',
+        to: email,
+        subject: 'Recuperar contraseña',
+        text: 'Sigue los pasos para recuperar tu cuenta',
+        html: `<p>Hola ${name} Recupera tu cuenta en Ecommerce</p>
+        <p>Si no recuerdas tu contraseña, has click en el enlace para registrar una nueva:</p>
+
+            <a href="${process.env.FRONTEND_URL}/olvide-password/${token}">Reestablecer contraseña</a>
+
+        <p>Si tu no solicitaste un cambio de contraseña, puedes ignorar el mensaje</p>`
+      })
+}
+
+module.exports = {
+    emailRegistro,
+    recuperarPass
+}

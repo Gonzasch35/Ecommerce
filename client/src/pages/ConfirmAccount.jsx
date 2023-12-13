@@ -33,9 +33,9 @@ const ConfirmAccount = () => {
         <div className="flex flex-col gap-5 min-h-screen text-center items-center justify-center">
                 {!cuentaConfirmada    ?   
                         <h1 className="text-amber-600 font-black text-5xl">Error al Confirmar la Cuenta<br />
-                            <span className="text-neutral-200">Prueba Iniciar Sesión o Crea Otra</span>
-                        </h1> 
-                        : 
+                            <span className="text-neutral-200">Prueba Iniciar Sesión o Crea Una Nueva</span>
+                        </h1>
+                        :
                         <h1 className="text-amber-600 font-black text-5xl capitalize">Cuenta confirmada<br />
                             <span className="text-neutral-200">ya puedes ingresar con tus datos</span>
                         </h1>}

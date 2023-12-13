@@ -46,7 +46,7 @@ const recuperarPass = async (datos) => {
         html: `<p>Hola ${name} Recupera tu cuenta en Ecommerce</p>
         <p>Si no recuerdas tu contraseña, has click en el enlace para registrar una nueva:</p>
 
-            <a href="${process.env.FRONTEND_URL}/olvide-password/${token}">Reestablecer contraseña</a>
+            <a href="${process.env.FRONTEND_URL}/olvide-password/${token}">Restablecer contraseña</a>
 
         <p>Si tu no solicitaste un cambio de contraseña, puedes ignorar el mensaje</p>`
       })

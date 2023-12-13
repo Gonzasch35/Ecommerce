@@ -3,6 +3,8 @@ import { Link } from "react-router-dom"
 import {validation} from './validation'
 import axios from "axios"
 
+const VITE_API_URL = import.meta.env.VITE_API_URL
+
 const Register = () => {
 
     const [registro, setRegistro] = useState({
@@ -37,7 +39,7 @@ const Register = () => {
 
     const handlerSubmit = async (e) => {
         e.preventDefault()
-
+        console.log(VITE_API_URL);
         if([registro.nombre, registro.email, registro.password, registro.repetirPassword].includes('')) {
             setCampos('Campos incompletos')
         }
@@ -45,8 +47,13 @@ const Register = () => {
             setCampos('Las contraseñas no son iguales')
         } else {
             try {
-                const response = await axios.post('http://localhost:3001/users', {name: registro.nombre, email: registro.email, password: registro.password})
-                setCampos(response.data)
+                const {data} = await axios.post(`${VITE_API_URL}/users`, {
+                    name: registro.nombre,
+                    email: registro.email,
+                    password: registro.password,
+                    phone: registro.celular
+                })
+                setCampos(data)
                 setRegistro({
                     nombre: '',
                     email: '',

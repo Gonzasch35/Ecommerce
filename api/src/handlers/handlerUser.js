@@ -1,4 +1,5 @@
 const {User, Producto} = require('../db')
+const emailRegistro = require('../helpers/email')
 const generarId = require('../helpers/generarId')
 const generateJWT = require('../helpers/generateJWT')
 
@@ -25,7 +26,16 @@ const postUser = async (req,res) => {
         const findOne = await User.findOne({where: {email}})
         if(findOne) throw Error('Ya existe una cuenta con ese email')
         const token = generarId()
-        await User.create({name, email, password, phone, address, token})
+
+    
+        const user = await User.create({name, email, password, phone, address, token})
+        
+        emailRegistro({
+            email: user.email,
+            name: user.name,
+            token: user.token
+        })
+        
         res.status(200).json('Usuario creado con exito')
     } catch (error) {
         res.status(400).json({error: error.message})

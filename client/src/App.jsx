@@ -25,7 +25,7 @@ function App() {
           <Route index element={<Login />}/>
           <Route path='registrar' element={<Register />}/>
           <Route path='olvide-password' element={<ForgotPass />}/>
-          <Route path='confirm/:id' element={<ConfirmAccount />}/>
+          <Route path='confirm/:token' element={<ConfirmAccount />}/>
           <Route path='olvide-password/:token' element={<RestartPass />}/>
         </Route>
       </Routes>

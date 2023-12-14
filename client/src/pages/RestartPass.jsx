@@ -1,8 +1,15 @@
 import { Link } from "react-router-dom"
 import { useState } from "react"
+import { useNavigate, useParams } from "react-router-dom"
+import { toast } from "react-toastify"
+import axios from "axios"
+
+const VITE_API_URL = import.meta.env.VITE_API_URL
 
 const RestartPass = () => {
 
+    const navigate = useNavigate()
+    const {token} = useParams()
 
     const [password, setPassword] = useState('')
     const [repeatPassword, setRepeatPassword] = useState('')
@@ -15,8 +22,23 @@ const RestartPass = () => {
         if(name === 'repeatPassword') setRepeatPassword(value)
     }
 
-    const handlerSubmit = e => {
-      e.preventDefault()
+    const handlerSubmit = async e => {
+        e.preventDefault()
+        try {
+            const { data } = await axios.post(`${VITE_API_URL}/users/change-password/${token}`, {
+                password: password
+            })
+            toast.success('Contraseña cambiada', {
+            position: "bottom-right",  
+            autoClose: 2000,
+            })
+            setTimeout(() => {
+                navigate('/') 
+            }, 3000);
+            
+        } catch (error) {
+            toast.error(error.response.data.error)
+        }
     }
 
   return (
@@ -28,10 +50,11 @@ const RestartPass = () => {
         <p class="mt-1 block font-sans text-base font-normal leading-relaxed text-gray-700 antialiased">
           Ingresa la nueva contraseña
         </p>
-        <form class="mt-8 mb-2 w-80 max-w-screen-lg sm:w-96" type="submit" onSubmit={() => handlerSubmit}>
+        <form class="mt-8 mb-2 w-80 max-w-screen-lg sm:w-96" onSubmit={handlerSubmit}>
           <div class="mb-4 flex flex-col gap-6">
             <div class="relative h-11 w-full min-w-[200px]">
               <input
+              type="password"
                 class="peer h-full w-full rounded-md border border-blue-gray-200 bg-transparent px-3 py-3 font-sans text-sm font-normal text-blue-gray-700 outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 focus:border-2 focus:border-violet-500 focus:border-t-transparent focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50"
                 placeHolder=" "
                 onChange={handleChange}
@@ -60,7 +83,7 @@ const RestartPass = () => {
           </div>
           <button
             class="mt-9 block w-full select-none rounded-lg bg-violet-500 py-3 px-6 text-center align-middle font-sans text-xs font-bold uppercase text-white shadow-md shadow-violet-500/20 transition-all hover:shadow-lg hover:shadow-violet-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
-            type="button"
+            type="submit"
             data-ripple-light="true"
           >
             Cambiar Contraseña

@@ -98,7 +98,7 @@ const loginUser = async (req, res) => {
                 phone: user.phone,
                 token: generateJWT(user.id)
             })
-        } else throw Error('El password es incorrecto')
+        } else throw Error('Contraseña Incorrecta')
 
 
     } catch (error) {

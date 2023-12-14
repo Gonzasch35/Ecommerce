@@ -1,6 +1,10 @@
+import axios from 'axios'
 import React from 'react'
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
+import { toast } from 'react-toastify'
+
+const VITE_API_URL = import.meta.env.VITE_API_URL
 
 const Login = () => {
 
@@ -15,8 +19,18 @@ const Login = () => {
         if(name === 'password') setPassword(value)
     }
 
-    const handlerSubmit = e => {
+    const handlerSubmit = async e => {
       e.preventDefault()
+
+      try {
+        const {data} = await axios.post(`${VITE_API_URL}/users/login`, {
+          email: email,
+          password: password
+        })
+        toast.success('login correcto')
+      } catch (error) {
+        toast.error(error.response.data.error)
+      }
     }
 
   return (
@@ -28,7 +42,7 @@ const Login = () => {
         <p class="mt-1 block font-sans text-base font-normal leading-relaxed text-gray-700 antialiased">
           Ingresa tus datos para loguearte
         </p>
-        <form class="mt-8 mb-2 w-80 max-w-screen-lg sm:w-96" type="submit" onSubmit={() => handlerSubmit}>
+        <form class="mt-8 mb-2 w-80 max-w-screen-lg sm:w-96" onSubmit={handlerSubmit}>
           <div class="mb-4 flex flex-col gap-6">
             <div class="relative h-11 w-full min-w-[200px]">
               <input
@@ -66,7 +80,7 @@ const Login = () => {
           </div>
           <button
             class="mt-9 block w-full select-none rounded-lg bg-violet-500 py-3 px-6 text-center align-middle font-sans text-xs font-bold uppercase text-white shadow-md shadow-violet-500/20 transition-all hover:shadow-lg hover:shadow-violet-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
-            type="button"
+            type="submit"
             data-ripple-light="true"
           >
             Login

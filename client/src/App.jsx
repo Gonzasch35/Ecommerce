@@ -4,17 +4,20 @@ import {Route, Routes} from 'react-router-dom'
 import './App.css'
 import axios from 'axios'
 axios.defaults.baseURL = 'http://localhost:3001/'
-import Login from './pages/Login'
+import Login from './pages/login/Login'
 import AuthLayout from './layouts/AuthLayout'
-import Register from './pages/Register'
-import ForgotPass from './pages/ForgotPass'
-import RestartPass from './pages/RestartPass'
-import ConfirmAccount from './pages/ConfirmAccount'
+import Register from './pages/login/Register'
+import ForgotPass from './pages/login/ForgotPass'
+import RestartPass from './pages/login/RestartPass'
+import ConfirmAccount from './pages/login/ConfirmAccount'
 import { ToastContainer } from "react-toastify"
 
 import 'react-toastify/dist/ReactToastify.css';
 import Landing from './layouts/Landing'
-import Home from './pages/Home'
+import Home from './pages/client/Home'
+import Admin from './layouts/Admin';
+import DashboardAdmin from './pages/admin/DashboardAdmin';
+import CreateProducto from './pages/admin/CreateProducto';
 
 function App() {
   
@@ -23,6 +26,10 @@ function App() {
   return (
     <> 
       <Routes>
+        <Route path='/admin' element={<Admin />}>
+          <Route index element={<DashboardAdmin />}/>
+          <Route path='crear-producto' element={<CreateProducto />}/>
+        </Route>
         <Route path='/' element={<Landing />}>
           <Route index element={<Home />}/>
         </Route>

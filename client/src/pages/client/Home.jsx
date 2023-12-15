@@ -1,8 +1,8 @@
-import NavBar from "../components/NavBar"
+import NavBar from "../../components/navBar/NavBar"
 import { useSelector, useDispatch } from 'react-redux'
-import { get_productos } from "../redux/actions"
+import { get_productos } from "../../redux/actions"
 import { useEffect } from "react"
-import Productos from "../components/productos/Productos"
+import Productos from "../../components/productos/Productos"
 
 const Home = () => {
 

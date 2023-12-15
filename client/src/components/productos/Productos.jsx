@@ -6,7 +6,7 @@ const Productos = ({productos}) => {
 
 
   return (
-    <div>
+    <div class="flex min-h-screen items-center justify-center bg-gray-100">
         {productos?.map(producto => {
             return (
                 <Producto

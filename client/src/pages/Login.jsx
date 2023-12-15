@@ -83,7 +83,7 @@ const Login = () => {
             type="submit"
             data-ripple-light="true"
           >
-            Login
+            Iniciar sesión
           </button>
           <p class="mt-4 block text-center font-sans text-base font-normal leading-relaxed text-gray-700 antialiased">
             ¿No tienes una cuenta? {''}

@@ -11,21 +11,21 @@ import ConfirmAccount from './pages/ConfirmAccount'
 import { ToastContainer } from "react-toastify"
 
 import 'react-toastify/dist/ReactToastify.css';
+import Landing from './layouts/Landing'
+import Home from './pages/Home'
 
 function App() {
   
-  const [productos, setProductos] = useState([])
 
-  const handlerProductos = async () => {
-    const products = await axios.get('http://localhost:3001/productos')
-    setProductos(products.data)
-  }
 
   return (
     <> 
       <Routes>
-        <Route path='/' element={<AuthLayout />} >
-          <Route index element={<Login />}/>
+        <Route path='/' element={<Landing />}>
+          <Route index element={<Home />}/>
+        </Route>
+        <Route path='/login' element={<AuthLayout />} >
+          <Route path='/login' element={<Login />}/>
           <Route path='registrar' element={<Register />}/>
           <Route path='olvide-password' element={<ForgotPass />}/>
           <Route path='confirm/:token' element={<ConfirmAccount />}/>

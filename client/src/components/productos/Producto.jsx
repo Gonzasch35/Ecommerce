@@ -1,5 +1,4 @@
 import React from 'react'
-import imagen from '../../assets/imagen.webp'
 
 const Producto = ({producto}) => {
     console.log(producto);

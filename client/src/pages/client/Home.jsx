@@ -11,9 +11,9 @@ const Home = () => {
 
   return (
     <div>
-        <NavBar 
+        {/* <NavBar 
           categorias={categorias}
-        />
+        /> */}
         <Productos 
             productos={productos}
         />

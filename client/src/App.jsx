@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 import 'flowbite';
-import {Route, Routes} from 'react-router-dom'
+import {Route, Routes, useLocation, useNavigate} from 'react-router-dom'
 import './App.css'
 import axios from 'axios'
 axios.defaults.baseURL = 'http://localhost:3001/'
@@ -18,13 +18,18 @@ import Home from './pages/client/Home'
 import Admin from './layouts/Admin';
 import DashboardAdmin from './pages/admin/DashboardAdmin';
 import CreateProducto from './pages/admin/CreateProducto';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { get_categorias, get_productos } from "./redux/actions"
 import DetailProduct from './pages/client/DetailProduct';
+import NavBar from './components/navBar/NavBar';
+import NavBarAdmin from './components/navBar/NavBarAdmin';
 
 
 function App() {
+
+  const navigate = useLocation()
   
+  const categorias = useSelector(state=> state.categorias)
   const dispatch = useDispatch()
 
     useEffect(()=> {
@@ -34,6 +39,8 @@ function App() {
 
   return (
     <> 
+      {navigate.pathname.startsWith('/admin') ?  <NavBarAdmin /> : <NavBar categorias={categorias} />}
+      
       <Routes>
         <Route path='/admin' element={<Admin />}>
           <Route index element={<DashboardAdmin />}/>

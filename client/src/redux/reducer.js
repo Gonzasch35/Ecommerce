@@ -18,6 +18,7 @@ const rootReducer = (state = initialState, action) => {
             const filtro = state.allProducts.filter(producto => producto.categoryId === action.payload)
             return{...state, productos: filtro}
         case GET_PRODUCTOS_BY_ID:
+            console.log(action.payload);
             return{...state, detailProduct: action.payload}
         default:
             return{

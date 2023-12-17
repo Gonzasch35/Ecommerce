@@ -20,6 +20,7 @@ import DashboardAdmin from './pages/admin/DashboardAdmin';
 import CreateProducto from './pages/admin/CreateProducto';
 import { useDispatch } from 'react-redux';
 import { get_categorias, get_productos } from "./redux/actions"
+import DetailProduct from './pages/client/DetailProduct';
 
 
 function App() {
@@ -40,6 +41,7 @@ function App() {
         </Route>
         <Route path='/' element={<Landing />}>
           <Route index element={<Home />}/>
+          <Route path='/producto/:id' element={<DetailProduct />} />
         </Route>
         <Route path='/login' element={<AuthLayout />} >
           <Route path='/login' element={<Login />}/>

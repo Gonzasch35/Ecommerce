@@ -1,8 +1,9 @@
-import { GET_PRODUCTOS, GET_CATEGORIAS, FILTER_PRODUCTOS } from "./actions"
+import { GET_PRODUCTOS, GET_CATEGORIAS, FILTER_PRODUCTOS, GET_PRODUCTOS_BY_ID } from "./actions"
 
 let initialState = {
     productos: [],
     allProducts: [],
+    detailProduct: {},
     categorias: [],
 }
 
@@ -16,6 +17,8 @@ const rootReducer = (state = initialState, action) => {
             let produc = [...state.allProducts]
             const filtro = state.allProducts.filter(producto => producto.categoryId === action.payload)
             return{...state, productos: filtro}
+        case GET_PRODUCTOS_BY_ID:
+            return{...state, detailProduct: action.payload}
         default:
             return{
                 ...state

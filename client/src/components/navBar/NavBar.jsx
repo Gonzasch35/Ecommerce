@@ -1,8 +1,19 @@
 import 'flowbite';
+import { filter_product } from '../../redux/actions';
+import { useDispatch, useSelector } from 'react-redux';
 
 const NavBar = ({categorias}) => {
 
-  console.log(categorias);
+  const dispatch = useDispatch()
+  const productos = useSelector(state => state.productos)
+
+  const productosFiltrados = productos.filter(producto => producto.categoryId === 2);
+  console.log(productosFiltrados);
+  const handleClick = (id) => {
+    dispatch(filter_product(id))
+    console.log(p);
+    console.log(productos);
+  }
 
   return (
     <nav class="bg-white border-gray-200 dark:bg-gray-900 dark:border-gray-700">
@@ -32,8 +43,8 @@ const NavBar = ({categorias}) => {
                 <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownLargeButton">
                   {categorias?.map(categoria=> {
                     return(
-                      <li>
-                        <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">{categoria.name}</a>
+                      <li key={categoria.id}>
+                        <a onClick={()=> handleClick(categoria.id)} href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">{categoria.name}</a>
                       </li>
                     )
                   })}

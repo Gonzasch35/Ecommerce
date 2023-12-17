@@ -4,6 +4,7 @@ const getCategorias = async(req,res) => {
     try {
         const categorias = await Category.findAll()
         if(!categorias) throw Error('No se encontraron categorias')
+        categorias.sort((a, b) => a.name.localeCompare(b.name));
         res.status(200).json(categorias)
     } catch (error) {
         res.status(400).json({error: error.message})

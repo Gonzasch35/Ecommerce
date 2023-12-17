@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect } from 'react'
 import 'flowbite';
 import {Route, Routes} from 'react-router-dom'
 import './App.css'
@@ -18,10 +18,18 @@ import Home from './pages/client/Home'
 import Admin from './layouts/Admin';
 import DashboardAdmin from './pages/admin/DashboardAdmin';
 import CreateProducto from './pages/admin/CreateProducto';
+import { useDispatch } from 'react-redux';
+import { get_categorias, get_productos } from "./redux/actions"
+
 
 function App() {
   
+  const dispatch = useDispatch()
 
+    useEffect(()=> {
+        dispatch(get_productos())
+        dispatch(get_categorias())
+    }, [])
 
   return (
     <> 

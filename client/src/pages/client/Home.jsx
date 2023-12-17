@@ -9,13 +9,6 @@ const Home = () => {
     const productos = useSelector(state=> state.productos)
     const categorias = useSelector(state=> state.categorias)
 
-    const dispatch = useDispatch()
-
-    useEffect(()=> {
-        dispatch(get_productos())
-        dispatch(get_categorias())
-    }, [])
-
   return (
     <div>
         <NavBar 

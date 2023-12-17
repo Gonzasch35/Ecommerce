@@ -25,7 +25,7 @@ const postProducto = async (req, res) => {
         }
         const producto = await Producto.findOrCreate({where: {nombre: nombre}, defaults:{ nombre, imagen, precio, talle, color, descripcion, genero, stock, categoryId}})
         if(!producto) throw Error('Producto no creado')
-        res.status(200).json({message: 'Producto creado'})
+        res.status(200).json('Producto creado')
     } catch (error) {
         res.status(400).json({error: error.message})
     }

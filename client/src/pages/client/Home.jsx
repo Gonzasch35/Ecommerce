@@ -14,7 +14,7 @@ const Home = () => {
     useEffect(()=> {
         dispatch(get_productos())
         dispatch(get_categorias())
-    }, [productos, categorias])
+    }, [])
 
   return (
     <div>

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { get_productosById } from '../../redux/actions';
 import PrevIcon from '../../components/icons/PrevIcon';
 import NextIcon from '../../components/icons/NextIcon';
@@ -11,7 +11,9 @@ import image4 from '../../assets/imagen4.png'
 
 
 const DetailProduct = () => {
-    
+
+
+    const navigate = useNavigate()
     const producto = useSelector(store=>store.detailProduct)
     const {nombre, imagen, precio, talle, color, stock, descripcion, categoryId} = producto
     const {id} = useParams()
@@ -23,7 +25,7 @@ const DetailProduct = () => {
 
     useEffect(() => {
         dispatch(get_productosById(id))
-    }, [])
+    }, [id])
     
     const handleClickPrev = () => { 
         if(imgIndex === 0) return setImgIndex(imagenes.length - 1)
@@ -35,7 +37,8 @@ const DetailProduct = () => {
     }
 
   return (
-    <main className='grid grid-cols-1 md:grid-cols-2 '>
+    <main className='grid grid-cols-1 md:grid-cols-2 mt-10 relative'>
+        <button onClick={()=>navigate('/')} className='absolute top-0 z-10 left-5'>Volver</button>
         <section className='grid md:grid-cols-4 md:gap-4'>
             <div className='relative col-span-4'>
                 <img src={imagenes[imgIndex]} className='rounded-3xl' />
@@ -50,40 +53,28 @@ const DetailProduct = () => {
             </div>
             {imagenes?.map(img => {
                 return (
-                    <img className='w-32 hidden md:block' src={img} alt="" />
+                    <img key={img} className='w-32 hidden md:block' src={img} alt="" />
                 )
             })}
-            {/* <img className='w-32 hidden md:block' src={imagen} alt="" />
-            <img className='w-32 hidden md:block' src={imagen} alt="" />
-            <img className='w-32 hidden md:block' src={imagen} alt="" /> */}
         </section>
         <section className='container mx-auto px-4 py-4'>
             <h1 className='font-bold text-xl mb-4'>{nombre}</h1>
             <p className='mb-3'>{descripcion}</p>
-            <p className='font-bold text-xl text-violet-700'>
+            <p className='font-bold text-xl text-violet-700 mb-4'>
                 <span>${precio}</span>
             </p>
-            <div className='flex gap-3 py-2'>
-                {talle && talles?.map(t => (
-                    <button key={t} className={t in talle ? 'border border-black rounded-full p-2 w-full text-center uppercase' : 'border border-gray-300 rounded-full p-2 w-full text-center text-gray-300 uppercase'} disabled={!t in talle}>
-                        {t}
-                    </button>
-                ))}
+            <div className='flex flex-col'>
+                <p>Talle</p>
+                <div className='flex gap-3 py-2 md:w-1/2'>
+                    {talle && talles?.map(t => (
+                        <button key={t} className={t in talle ? 'border border-black rounded-full p-2 w-full text-center uppercase' : 'border border-gray-300 rounded-full p-2 w-full text-center text-gray-300 uppercase'} disabled={!(t in talle)}>
+                            {t}
+                        </button>
+                    ))}
+                </div>
+
             </div>
         </section>
-
-
-
-
-    {/* <div className='flex h-52 flex-row'>
-        <div className=''>
-            <img src={imagen} alt="" />
-        </div>
-        <div className='flex flex-col gap-10'>
-            <h2>{nombre}</h2>
-            <p>{precio}</p>
-            </div>
-        </div> */}
     </main>
   )
 }

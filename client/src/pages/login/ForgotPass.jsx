@@ -23,7 +23,6 @@ const ForgotPass = () => {
 
         try {
             const {data} = await axios.post(`${VITE_API_URL}/users/change-password`, {email: email})
-            console.log(data);
             setEmail('')
             toast.success(data, {
                 position: "bottom-right",

@@ -33,7 +33,7 @@ const RestartPass = () => {
             autoClose: 2000,
             })
             setTimeout(() => {
-                navigate('/') 
+                navigate('/login') 
             }, 3000);
             
         } catch (error) {

@@ -7,8 +7,12 @@ import Productos from "../../components/productos/Productos"
 const Home = () => {
 
     const productos = useSelector(state=> state.productos)
-    const categorias = useSelector(state=> state.categorias)
+    const dispatch = useDispatch()
 
+    useEffect(() => {
+      dispatch(get_productos())
+    }, [])
+    
   return (
     <div>
         {/* <NavBar 

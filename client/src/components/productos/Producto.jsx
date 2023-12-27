@@ -16,7 +16,7 @@ const Producto = ({producto}) => {
         <div class="mx-auto px-5">
             <div class="max-w-xs rounded-lg bg-white p-3 shadow duration-150 hover:scale-105 hover:shadow-md">
                 <Link onClick={()=>handleClick(producto.id)} to={`/producto/${producto.id}`} >
-                  <img class="w-full rounded-lg object-cover object-center" src={producto?.imagen} alt="product" /> 
+                  <img class="w-full rounded-lg object-cover object-center" src={producto?.imagen[0]} alt="product" /> 
                 </Link>
                 <p class="my-4 pl-4 h-12 font-bold text-gray-500">{producto?.nombre}</p>
                 <p class="mb-4 ml-4 text-xl font-semibold text-gray-800">${producto.precio}</p>

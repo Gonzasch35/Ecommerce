@@ -20,7 +20,6 @@ const DetailProduct = () => {
     const dispatch = useDispatch()
     const [imgIndex, setImgIndex] = useState(0)
 
-    const imagenes = [imagen, image2, image3, image4]
     const talles = ['xs', 's', 'm', 'l', 'xl', 'xxl', 'xxxl']
 
     useEffect(() => {
@@ -28,11 +27,11 @@ const DetailProduct = () => {
     }, [id])
     
     const handleClickPrev = () => { 
-        if(imgIndex === 0) return setImgIndex(imagenes.length - 1)
+        if(imgIndex === 0) return setImgIndex(imagen.length - 1)
         setImgIndex(imgIndex - 1)
     }
     const handleClickNext = () => {
-        if(imgIndex === imagenes.length - 1) return setImgIndex(0)
+        if(imgIndex === imagen.length - 1) return setImgIndex(0)
         setImgIndex(imgIndex + 1)
     }
 
@@ -41,7 +40,7 @@ const DetailProduct = () => {
         <button onClick={()=>navigate('/')} className='absolute top-0 z-10 left-5'>Volver</button>
         <section className='grid md:grid-cols-4 md:gap-4'>
             <div className='relative col-span-4'>
-                <img src={imagenes[imgIndex]} className='rounded-3xl' />
+                <img src={imagen[imgIndex]} className='rounded-3xl' />
                 <div className='absolute top-1/2 left-0 -translate-y-1/2 w-full flex justify-between px-5'>
                     <button onClick={handleClickPrev} className='bg-black w-10 h-10 rounded-full grid place-items-center'>
                         <PrevIcon />
@@ -51,7 +50,7 @@ const DetailProduct = () => {
                     </button>
                 </div>
             </div>
-            {imagenes?.map(img => {
+            {imagen?.map(img => {
                 return (
                     <img key={img} className='w-32 hidden md:block' src={img} alt="" />
                 )

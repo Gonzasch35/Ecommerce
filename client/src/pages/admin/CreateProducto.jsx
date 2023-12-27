@@ -15,7 +15,7 @@ const CreateProducto = () => {
   
   const [producto, setProducto] = useState({
     nombre: '',
-    imagen: '',
+    imagen: [],
     precio: null,
     color: '',
     descripcion: '',
@@ -45,7 +45,7 @@ const CreateProducto = () => {
         
         .then((data) => {
           console.log(data);
-          setProducto({...producto, imagen: data.secure_url,
+          setProducto({...producto, imagen: [...producto.imagen, data.secure_url],
           });
         })
 
@@ -67,7 +67,7 @@ const CreateProducto = () => {
         })
       setProducto({
         nombre: '',
-        imagen: '',
+        imagen: [],
         precio: '',
         color: '',
         descripcion: '',
@@ -173,7 +173,7 @@ const CreateProducto = () => {
                     <option value=""></option>
                   {categorias?.map(categoria => {
                     return(
-                        <option value={categoria.id}>{categoria.name}</option>
+                        <option key={categoria.id} value={categoria.id}>{categoria.name}</option>
                         )
                       })
                     }
@@ -201,12 +201,16 @@ const CreateProducto = () => {
           </form>
         </div>
         {
-          producto.imagen && 
-              <div className='m-auto rounded-xl bg-white'>
-                <Image publicId={producto?.imagen} cloudName={CLOUD_NAME} className='p-5 w-96'>
-                    <Transformation crop="thumb" />
-                </Image>
-              </div>
+          producto.imagen.length && 
+          <div className='m-auto rounded-xl bg-white'>
+            {producto.imagen?.map(img=>{
+              return(
+                  <Image publicId={img} cloudName={CLOUD_NAME} className='p-5 w-36'>
+                      <Transformation crop="thumb" />
+                  </Image>
+              )
+            })}
+          </div>
         }
 
       </div>

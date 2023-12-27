@@ -9,6 +9,14 @@ const {
 const sequelize = new Sequelize(`postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/ecommerce`, {
   logging: false, // set to console.log to see the raw SQL queries
   native: false, // lets Sequelize know we can use pg-native for ~30% more speed
+  dialect: 'postgres',
+  ssl: true,  // Habilita SSL/TLS
+  dialectOptions: {
+    ssl: {
+      require: true,  // Requiere SSL
+      rejectUnauthorized: false, // Opcional: Desactiva la verificación del certificado (¡No recomendado para entornos de producción sin verificar!)
+    },
+  },
 });
 const basename = path.basename(__filename);
 

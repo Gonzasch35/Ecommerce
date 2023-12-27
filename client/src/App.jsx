@@ -29,7 +29,7 @@ import Categorias from './pages/client/Categorias';
 function App() {
 
   const navigate = useLocation()
-  
+  //hola
   const categorias = useSelector(state=> state.categorias)
   const dispatch = useDispatch()
   const [auth, setAuth] = useState({})

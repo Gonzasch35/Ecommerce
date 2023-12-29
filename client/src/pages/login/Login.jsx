@@ -1,7 +1,7 @@
 import axios from 'axios'
 import React from 'react'
 import { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, Navigate, useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 
 const VITE_API_URL = import.meta.env.VITE_API_URL
@@ -10,6 +10,7 @@ const Login = () => {
 
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
+    const navigate = useNavigate()
 
     const handleChange = (e) => {
         const name = e.target.name
@@ -29,6 +30,9 @@ const Login = () => {
         })
         localStorage.setItem('token', data.token)
         toast.success('login correcto')
+        setTimeout(() => {
+          navigate('/')
+        }, 2000);
       } catch (error) {
         toast.error(error.response.data.error)
       }

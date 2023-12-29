@@ -57,7 +57,7 @@ const CreateProducto = () => {
 
   const handlerSubmit = async (e) => {
     e.preventDefault()
-    const p = {...producto, precio: parseFloat(producto.precio), categoryId: parseInt(producto.categoryId), talle: {xl: 3}}
+    const p = {...producto, precio: parseFloat(producto.precio), categoryId: parseInt(producto.categoryId), talle: {xl: 3, l: 2, xs: 4}}
 
     try {
       const {data} = await axios.post(`${VITE_API_URL}/productos`, p)

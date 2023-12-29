@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import 'flowbite';
 import {Route, Routes, useLocation, useNavigate} from 'react-router-dom'
 import './App.css'
@@ -19,22 +19,30 @@ import Admin from './layouts/Admin';
 import DashboardAdmin from './pages/admin/DashboardAdmin';
 import CreateProducto from './pages/admin/CreateProducto';
 import { useDispatch, useSelector } from 'react-redux';
-import { get_categorias, get_productos } from "./redux/actions"
+import { get_categorias, get_productos, autenticarUsuario } from "./redux/actions"
 import DetailProduct from './pages/client/DetailProduct';
 import NavBar from './components/navBar/NavBar';
 import NavBarAdmin from './components/navBar/NavBarAdmin';
+import Categorias from './pages/client/Categorias';
 
 
 function App() {
 
   const navigate = useLocation()
-  
+  //hola
   const categorias = useSelector(state=> state.categorias)
   const dispatch = useDispatch()
+  const [auth, setAuth] = useState({})
 
     useEffect(()=> {
         dispatch(get_productos())
         dispatch(get_categorias())
+        const token = localStorage.getItem('token')
+        if(!token){
+          return
+        } else {
+          dispatch(autenticarUsuario(token))
+        }     
     }, [])
 
   return (
@@ -48,10 +56,11 @@ function App() {
         </Route>
         <Route path='/' element={<Landing />}>
           <Route index element={<Home />}/>
+          <Route path='/categoria/:id' element={<Categorias />}/>
           <Route path='/producto/:id' element={<DetailProduct />} />
         </Route>
         <Route path='/login' element={<AuthLayout />} >
-          <Route path='/login' element={<Login />}/>
+          <Route index element={<Login />}/>
           <Route path='registrar' element={<Register />}/>
           <Route path='olvide-password' element={<ForgotPass />}/>
           <Route path='confirm/:token' element={<ConfirmAccount />}/>

@@ -14,7 +14,7 @@ module.exports = (sequelize) => {
       allowNull: false,
     },
     imagen: {
-      type: DataTypes.STRING,
+      type: DataTypes.ARRAY(DataTypes.STRING),
       allowNull: false,
     },
     precio: {
@@ -27,7 +27,7 @@ module.exports = (sequelize) => {
       validate: {
         // Validación personalizada para asegurar que solo hay claves específicas y valores numéricos
         esTalleValido(value) {
-          const allowedSizes = ['xxl', 'xl', 'xs', 'm', 's', 'l'];
+          const allowedSizes = ['xxl', 'xxxl', 'xl', 'xs', 'm', 's', 'l'];
 
           for (const key in value) {
             if (!allowedSizes.includes(key) || typeof value[key] !== 'number') {

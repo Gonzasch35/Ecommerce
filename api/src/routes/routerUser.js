@@ -1,5 +1,5 @@
 const {Router} = require('express')
-const {getAllUsers, postUser, getUser, updateUser, deleteUser, loginUser, addFavorito, confirmUser, cambiarPassword, restartPassword, newPassword, perfil} = require('../handlers/handlerUser')
+const {getAllUsers, postUser, getUser, updateUser, deleteUser, loginUser, addFavorito, confirmUser, cambiarPassword, restartPassword, newPassword, perfil, addProductToCart} = require('../handlers/handlerUser')
 const checkAuth = require('../middleware/checkAuth')
 
 const routerUser = Router()
@@ -19,6 +19,7 @@ routerUser.get('/:id', getUser)
 routerUser.delete('/:id', deleteUser)
 
 routerUser.put('/favorito/:id', addFavorito)
+routerUser.put('/cart/:id', addProductToCart)
 
 
 module.exports = routerUser

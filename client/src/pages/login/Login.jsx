@@ -29,6 +29,7 @@ const Login = () => {
           password: password
         })
         localStorage.setItem('token', data.token)
+        localStorage.setItem('cart')
         toast.success('login correcto')
         setTimeout(() => {
           navigate('/')

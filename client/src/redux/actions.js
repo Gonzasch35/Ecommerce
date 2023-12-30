@@ -6,6 +6,7 @@ export const GET_CATEGORIAS = "GET_CATEGORIAS";
 export const FILTER_PRODUCTOS = "FILTER_PRODUCTOS";
 export const AUTH_USER = "AUTH_USER";
 export const FIND_PRODUCTO = "FIND_PRODUCTO";
+export const ADD_CART = "ADD_CART";
 
 const URL_PRODUCTOS = "/productos";
 const URL_CATEGORIAS = "/categorias/";
@@ -72,3 +73,16 @@ export const autenticarUsuario = (token) => {
     }
   };
 };
+
+export const addProductToCard = (id, body) => {
+  return async function (dispatch) {
+    try {
+      console.log(body);
+      const {data} = await axios.put(`/users/cart/${id}`, body)
+      console.log(data);
+      dispatch({type: ADD_CART, payload: data})
+    } catch (error) {
+      alert(error)
+    }
+  }
+}

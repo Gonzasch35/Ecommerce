@@ -24,6 +24,7 @@ import DetailProduct from './pages/client/DetailProduct';
 import NavBar from './components/navBar/NavBar';
 import NavBarAdmin from './components/navBar/NavBarAdmin';
 import Categorias from './pages/client/Categorias';
+import CartProducts from './pages/client/CartProducts';
 
 
 function App() {
@@ -33,6 +34,7 @@ function App() {
   const categorias = useSelector(state=> state.categorias)
   const dispatch = useDispatch()
   const [auth, setAuth] = useState({})
+  
 
     useEffect(()=> {
         dispatch(get_productos())
@@ -58,6 +60,7 @@ function App() {
           <Route index element={<Home />}/>
           <Route path='/categoria/:id' element={<Categorias />}/>
           <Route path='/producto/:id' element={<DetailProduct />} />
+          <Route path='/carrito' element={<CartProducts />} />
         </Route>
         <Route path='/login' element={<AuthLayout />} >
           <Route index element={<Login />}/>

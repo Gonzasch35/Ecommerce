@@ -12,7 +12,7 @@ const checkAuth = async (req, res, next) => {
             console.log(decoded);
             
             req.usuario = await User.findByPk(decoded.id,{
-                attributes: ['id', 'name', 'email', 'phone', 'admin']})
+                attributes: ['id', 'name', 'email', 'phone', 'admin', 'cart']})
             console.log(req.usuario);
             if(!req.usuario) {
                 throw Error('No se encontro al usuario')

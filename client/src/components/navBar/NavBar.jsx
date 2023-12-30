@@ -5,6 +5,8 @@ import { useDispatch, useSelector } from "react-redux";
 import heart from "../../assets/heart.png";
 import { Link } from "react-router-dom";
 import { useState } from "react";
+import CartIcon from "../icons/CartIcon";
+import HeartIcon from "../icons/HeartIcon";
 
 const NavBar = ({ categorias }) => {
   const user = useSelector((state) => state.user);
@@ -23,7 +25,7 @@ const NavBar = ({ categorias }) => {
   const handleFind = (e) =>{
     e.preventDefault();
     dispatch(findProduct(finddata));
-  } 
+  }
 
   return (
     <nav class="bg-gray-900 border-gray-200 dark:bg-gray-900 dark:border-gray-700">
@@ -161,12 +163,12 @@ const NavBar = ({ categorias }) => {
             </li>
           </ul>
 
-          <Link to="/cart">Carrito</Link>
-          <img src={heart} alt="" />
+          <Link to="/carrito"><CartIcon cart={user ? user.cart?.length : 0}/></Link>
+          <Link className="" to='/favoritos'><HeartIcon /></Link>
           {user.id ? (
             <Link
               to="/"
-              class="block py-2 px-3 text-white rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
+              class="block py-2 px-3 text-white rounded hover:bg-gray-100 hover:text-black md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
             >
               Cerrar sesión
             </Link>

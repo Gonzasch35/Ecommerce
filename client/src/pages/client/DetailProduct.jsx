@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom'
-import { get_productosById } from '../../redux/actions';
+import { addProductToCard, get_productosById } from '../../redux/actions';
 import PrevIcon from '../../components/icons/PrevIcon';
 import NextIcon from '../../components/icons/NextIcon';
 
@@ -12,12 +12,12 @@ const DetailProduct = () => {
 
     const navigate = useNavigate()
     const producto = useSelector(store=>store.detailProduct)
+    const user = useSelector(store=>store.user)
     const {nombre, imagen, precio, talle, color, stock, descripcion, categoryId} = producto
     const {id} = useParams()
     const dispatch = useDispatch()
     const [imgIndex, setImgIndex] = useState(0)
     const [selectedTalle, setSelectedTalle] = useState('')
-    console.log(talle);
 
     const talles = ['xs', 's', 'm', 'l', 'xl', 'xxl', 'xxxl']
 
@@ -40,10 +40,11 @@ const DetailProduct = () => {
     const handleClickTalle = (index) => {
         if(index === selectedTalle) setSelectedTalle('')
         else setSelectedTalle(index)
+
     }
     const handleClickAddCart = (e) => {
         e.preventDefault()
-        localStorage.getItem('cart')
+        dispatch(addProductToCard(user.id, ({talle: talles[selectedTalle], productoId: id})))
     }
 
   return (
@@ -84,7 +85,7 @@ const DetailProduct = () => {
                 <p className=''>Talle</p>
                 <div className='flex gap-3 py-2 md:w-1/2'>
                     {talle && talles?.map((t, index) => (
-                        <button key={t} onClick={()=>handleClickTalle(index)} className={`border rounded-full p-2 w-full text-center uppercase ${
+                        <button key={t} onClick={()=>handleClickTalle(index, t)} className={`border rounded-full p-2 w-full text-center uppercase ${
                             t in talle
                                 ? selectedTalle === index
                                     ? 'bg-violet-500 text-white' // Cambia estos estilos según tus necesidades

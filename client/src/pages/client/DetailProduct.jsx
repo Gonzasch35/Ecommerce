@@ -41,6 +41,10 @@ const DetailProduct = () => {
         if(index === selectedTalle) setSelectedTalle('')
         else setSelectedTalle(index)
     }
+    const handleClickAddCart = (e) => {
+        e.preventDefault()
+        localStorage.getItem('cart')
+    }
 
   return (
     <main className='grid grid-cols-1 md:grid-cols-2 mt-10 relative'>
@@ -93,7 +97,7 @@ const DetailProduct = () => {
                 </div>
             </div>
             <div className='my-4'>
-                <button className='w-1/2 bg-violet-500 text-white font-bold uppercase py-2 rounded-xl hover:bg-violet-700'>Agregar al carrito</button>
+                <button onClick={handleClickAddCart} className='w-1/2 bg-violet-500 text-white font-bold uppercase py-2 rounded-xl hover:bg-violet-700'>Agregar al carrito</button>
             </div>
         </section>
     </main>

@@ -2,11 +2,12 @@ const {User, Producto} = require('../db')
 const {emailRegistro, recuperarPass} = require('../helpers/email')
 const generarId = require('../helpers/generarId')
 const generateJWT = require('../helpers/generateJWT')
+const {addProducto} = require('../controllers/controllerUser')
 
 const getAllUsers = async (req,res) => {
     try {
         const users = await User.findAll({
-            attributes: ['id', 'name', 'email', 'phone', 'admin', 'token'],
+            attributes: ['id', 'name', 'email', 'phone', 'admin', 'token', 'cart'],
             include: [
                 {
                   model: Producto,
@@ -130,6 +131,18 @@ const addFavorito = async (req, res) => {
     }
 }
 
+const addProductToCart = async (req,res) => {
+    const {id} = req.params
+    const {talle, productoId} = req.body
+    try {
+        const add = await addProducto(id, talle, productoId)
+
+        res.status(200).json(add.cart)
+    } catch (error) {
+        res.status(400).json({error: error.message})
+    }
+}
+
 const confirmUser = async (req,res) => {
     const {token} = req.params
     try {
@@ -219,5 +232,6 @@ module.exports = {
     cambiarPassword,
     restartPassword,
     newPassword,
-    perfil
+    perfil,
+    addProductToCart
 }

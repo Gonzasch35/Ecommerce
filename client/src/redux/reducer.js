@@ -5,7 +5,8 @@ import {
   GET_PRODUCTOS_BY_ID,
   AUTH_USER,
   FIND_PRODUCTO,
-  ADD_CART
+  ADD_CART,
+  DELETE_CART
 } from "./actions";
 
 let initialState = {
@@ -39,6 +40,8 @@ const rootReducer = (state = initialState, action) => {
     case AUTH_USER:
       return { ...state, user: action.payload };
     case ADD_CART:
+      return {...state, user: {...state.user, cart: action.payload}}
+    case DELETE_CART:
       return {...state, user: {...state.user, cart: action.payload}}
     default:
       return {

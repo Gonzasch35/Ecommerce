@@ -29,6 +29,17 @@ const addProducto = async (id, talle, productoId) => {
         return user
 }
 
+const deleteToCart = async (id, indice) => {
+    const user = await User.findByPk(id)
+    if(!user) throw Error('No existe el usuario')
+
+        user.cart = await user.cart.filter((producto, index)=> index !== indice)
+        user.save()
+
+    return user.cart
+}
+
 module.exports = {
-    addProducto
+    addProducto,
+    deleteToCart
 }

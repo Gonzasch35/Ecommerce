@@ -98,7 +98,7 @@ const DetailProduct = () => {
                 </div>
             </div>
             <div className='my-4'>
-                <button onClick={handleClickAddCart} className='w-1/2 bg-violet-500 text-white font-bold uppercase py-2 rounded-xl hover:bg-violet-700'>Agregar al carrito</button>
+                <button onClick={handleClickAddCart} className={selectedTalle ? 'w-1/2 bg-violet-500 text-white font-bold uppercase py-2 rounded-xl hover:bg-violet-700' : 'w-1/2 bg-violet-300 text-white font-bold uppercase py-2 rounded-xl'} disabled={!selectedTalle}>Agregar al carrito</button>
             </div>
         </section>
     </main>

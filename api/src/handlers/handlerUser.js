@@ -7,7 +7,7 @@ const {addProducto, deleteToCart} = require('../controllers/controllerUser')
 const getAllUsers = async (req,res) => {
     try {
         const users = await User.findAll({
-            attributes: ['id', 'name', 'email', 'phone', 'admin', 'token', 'cart'],
+            attributes: ['id', 'name', 'email', 'phone', 'admin', 'token', 'cart', 'productos'],
             include: [
                 {
                   model: Producto,
@@ -111,7 +111,13 @@ const addFavorito = async (req, res) => {
     const {id} = req.params
     const {productoId} = req.body
     try {
-        const usuario = await User.findByPk(id)
+        const usuario = await User.findByPk(id,{
+            include: [
+              {
+                model: Producto,
+              },
+            ],
+          })
         if(!usuario) throw Error('No existe el usuario')
 
         const findProducto = await Producto.findByPk(productoId)
@@ -120,9 +126,9 @@ const addFavorito = async (req, res) => {
         const add = await usuario.addProductos(findProducto)
         if(!add) {
             await usuario.removeProductos(findProducto)
-            res.status(200).json('Producto eliminado de favoritos')
+            res.status(200).json(usuario.productos)
         } else {
-            res.status(200).json('Producto agregado a favoritos')
+            res.status(200).json(usuario.productos)
         }
 
 

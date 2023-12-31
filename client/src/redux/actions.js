@@ -8,6 +8,7 @@ export const AUTH_USER = "AUTH_USER";
 export const FIND_PRODUCTO = "FIND_PRODUCTO";
 export const ADD_CART = "ADD_CART";
 export const DELETE_CART = "DELETE_CART";
+export const ADD_FAVORITO = "ADD_FAVORITO";
 
 const URL_PRODUCTOS = "/productos";
 const URL_CATEGORIAS = "/categorias/";
@@ -90,12 +91,22 @@ export const addProductToCard = (id, body) => {
 export const deleteProductToCart = (id, indice) => {
   return async function (dispatch) {
     try {
-      console.log(id);
-      console.log(indice);
       const {data} = await axios.put(`/users/cart/delete/${id}`, indice)
       dispatch({type: DELETE_CART, payload: data})
     } catch (error) {
       alert(error)
+    }
+  }
+}
+
+export const addFavorito = (id, productoId) => {
+  return async function (dispatch) {
+    try {
+      console.log(productoId);
+      const {data} = await axios.put(`/users/favorito/${id}`, productoId)
+      dispatch({type: ADD_FAVORITO, payload: data})
+    } catch (error) {
+      console.log(error);
     }
   }
 }

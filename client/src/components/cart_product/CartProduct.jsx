@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom'
 import basura from '../../assets/eliminar.png'
 import { useDispatch, useSelector } from 'react-redux'
 import { deleteProductToCart } from '../../redux/actions'
+import HeartIcon from '../icons/HeartIcon'
 
 
 const CartProduct = ({producto, indice}) => {
@@ -14,7 +15,7 @@ const CartProduct = ({producto, indice}) => {
     }
 
   return (
-    <div className='p-4 border'>
+    <div className='p-4 border bg-white'>
         <div className='flex justify-between'>
             <h1 className='font-semibold'>{producto.nombre}</h1>
             <button onClick={()=>handleClickDelete(indice)}>

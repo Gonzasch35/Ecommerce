@@ -48,7 +48,7 @@ function App() {
     }, [])
 
   return (
-    <> 
+    <div className='bg-gray-100'> 
       {navigate.pathname.startsWith('/admin') ?  <NavBarAdmin /> : <NavBar categorias={categorias} />}
       
       <Routes>
@@ -71,7 +71,7 @@ function App() {
         </Route>
       </Routes>
       <ToastContainer />
-    </>
+    </div>
   )
 }
 

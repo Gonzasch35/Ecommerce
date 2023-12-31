@@ -6,11 +6,11 @@ import CartProduct from '../../components/cart_product/CartProduct';
 const CartProducts = () => {
 
     const {cart} = useSelector(state=>state.user)
-    const envio = 1.500
-    const descuento = 10
+    const descuento = 0
     const subTotal = cart?.reduce((total, producto) => total + producto.precio, 0)
-    const precioTotal = subTotal + envio
-    const precioConDescuento = precioTotal - (precioTotal / descuento) 
+    const envio = subTotal > 50.000 ? 'Gratis' : 3.000
+    const precioTotal = envio === 'Gratis' ? subTotal : subTotal + envio
+    const precioConDescuento = precioTotal - (precioTotal / descuento)
     
     return (
         <div className='p-5'>
@@ -24,7 +24,7 @@ const CartProducts = () => {
                         <CartProduct key={index} indice={index} producto={producto}/>
                     ))}
                 </section>
-                <section className='flex justify-between items-center flex-col w-full border md:w-1/3 p-3'>
+                <section className='flex justify-between items-center bg-white flex-col w-full border md:w-1/3 p-3'>
                         <h2 className='text-xl font-semibold text-violet-800 text-center'>Total a Pagar</h2>
                         <div className='w-full flex justify-around'>
                             <p>Subtotal</p>
@@ -34,17 +34,17 @@ const CartProducts = () => {
                         <div className='w-full flex justify-around'>
                             <p>Costo de Envío</p>
                             <div className='border-b mb-1 w-1/2 border-dashed border-violet-600'></div>
-                            <span className='font-bold'>${envio.toFixed(3)}</span>
+                            <span className='font-bold'>{typeof(envio) === 'number' ? `$${envio.toFixed(3)}` : envio}</span>
                         </div>
-                        <div className='w-full flex justify-around'>
+                        { descuento > 0 && <div className='w-full flex justify-around'>
                             <p>Descuento</p>
                             <div className='border-b mb-1 w-1/2 border-dashed border-violet-600'></div>
                             <span className='font-bold'>%{descuento}</span>
-                        </div>
+                        </div>}
                         <div className='w-full flex justify-around'>
                             <p>Total</p>
                             <div className='border-b mb-1 w-1/2 border-dashed border-violet-600'></div>
-                            <span className='font-bold'>${(precioConDescuento).toFixed(3)}</span>
+                            <span className='font-bold'>${descuento > 0 ? (precioConDescuento).toFixed(3) : precioTotal}</span>
                         </div>
                         <button className='w-2/3 bg-violet-600 hover:bg-violet-700 py-2 text-white uppercase font-semibold rounded'>Pagar</button>
                 </section>

@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken')
-const {User} = require('../db')
+const {User, Producto} = require('../db')
 
 const checkAuth = async (req, res, next) => {
     
@@ -12,7 +12,12 @@ const checkAuth = async (req, res, next) => {
             console.log(decoded);
             
             req.usuario = await User.findByPk(decoded.id,{
-                attributes: ['id', 'name', 'email', 'phone', 'admin', 'cart']})
+                attributes: ['id', 'name', 'email', 'phone', 'admin', 'cart'], 
+                include: [
+                    {
+                        model: Producto,
+                    }
+                ]})
             console.log(req.usuario);
             if(!req.usuario) {
                 throw Error('No se encontro al usuario')

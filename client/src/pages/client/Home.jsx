@@ -14,10 +14,7 @@ const Home = () => {
     }, [])
     
   return (
-    <div>
-        {/* <NavBar 
-          categorias={categorias}
-        /> */}
+    <div> 
         <Productos 
             productos={productos}
         />

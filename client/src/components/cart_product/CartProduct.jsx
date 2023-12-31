@@ -1,15 +1,25 @@
 import { Link } from 'react-router-dom'
 import basura from '../../assets/eliminar.png'
+import { useDispatch, useSelector } from 'react-redux'
+import { deleteProductToCart } from '../../redux/actions'
 
 
-const CartProduct = ({producto}) => {
+const CartProduct = ({producto, indice}) => {
+    const {cart, id} = useSelector(state=>state.user)
+    const dispatch = useDispatch()
+
+
+    const handleClickDelete = (indice) => {
+        dispatch(deleteProductToCart(id, {indice: indice}))
+    }
+
   return (
     <div className='p-4 border'>
         <div className='flex justify-between'>
             <h1 className='font-semibold'>{producto.nombre}</h1>
-            <Link>
-                <img className='hover:scale-110' src={basura} width='30' alt={basura} />
-            </Link>
+            <button onClick={()=>handleClickDelete(indice)}>
+                <img className='hover:scale-105' src={basura} width='30' alt={basura} />
+            </button>
         </div>
         <div className='flex justify-between w-4/5'>
             <img src={producto.imagen} width='100' height='100' alt={producto.nombre} />
@@ -23,7 +33,7 @@ const CartProduct = ({producto}) => {
             </div>
             <div className='text-center'>
                 <p>Total</p>
-                <span className='font-semibold text-violet-800 text-xl'>{producto.precio}</span>
+                <span className='font-semibold text-violet-800 text-xl'>${producto.precio}</span>
             </div>
         </div>
     </div>

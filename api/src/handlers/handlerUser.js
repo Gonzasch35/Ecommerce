@@ -2,7 +2,7 @@ const {User, Producto} = require('../db')
 const {emailRegistro, recuperarPass} = require('../helpers/email')
 const generarId = require('../helpers/generarId')
 const generateJWT = require('../helpers/generateJWT')
-const {addProducto} = require('../controllers/controllerUser')
+const {addProducto, deleteToCart} = require('../controllers/controllerUser')
 
 const getAllUsers = async (req,res) => {
     try {
@@ -143,6 +143,17 @@ const addProductToCart = async (req,res) => {
     }
 }
 
+const deleteProductToCart = async (req,res) => {
+    const {id} = req.params
+    const {indice} = req.body
+    try {
+        const user = await deleteToCart(id, indice)
+        res.status(200).json(user)
+    } catch (error) {
+        res.status(400).json({error: error.message})
+    }
+}
+
 const confirmUser = async (req,res) => {
     const {token} = req.params
     try {
@@ -233,5 +244,6 @@ module.exports = {
     restartPassword,
     newPassword,
     perfil,
-    addProductToCart
+    addProductToCart,
+    deleteProductToCart
 }

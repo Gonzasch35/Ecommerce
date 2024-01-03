@@ -81,7 +81,7 @@ const CreateProducto = () => {
 
   return (
     <div class="flex min-h-screen py-10 items-center justify-center">
-      <div class="flex flex-row gap-3">
+      <div class="flex flex-col md:flex-row gap-3">
         <div class="bg-white p-5 relative flex flex-col rounded-xl bg-transparent bg-clip-border text-gray-700 shadow-none">
             <h4 class="block font-sans text-2xl font-semibold leading-snug tracking-normal text-violet-500 antialiased">
               Ingresa un producto nuevo
@@ -190,17 +190,17 @@ const CreateProducto = () => {
           </form>
         </div>
         {
-          producto.imagen.length && 
-          <div className='m-auto rounded-xl bg-white'>
+          producto.imagen.length ? 
+          <div className='m-auto flex  md:flex-col flex-row flex-wrap rounded-xl bg-white'>
             {producto.imagen?.map(img=>{
               return(
-                  <Image publicId={img} cloudName={CLOUD_NAME} className='p-5 w-36'>
+                  <Image publicId={img} cloudName={CLOUD_NAME} className='p-2 md:p-5 w-32 md:w-36'>
                       <Transformation crop="thumb" />
                   </Image>
               )
             })}
           </div>
-        }
+        : ''}
 
       </div>
     </div>

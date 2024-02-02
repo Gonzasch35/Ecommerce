@@ -25,6 +25,7 @@ import NavBar from './components/navBar/NavBar';
 import NavBarAdmin from './components/navBar/NavBarAdmin';
 import Categorias from './pages/client/Categorias';
 import CartProducts from './pages/client/CartProducts';
+import Footer from './components/footer/Footer';
 
 
 function App() {
@@ -70,6 +71,7 @@ function App() {
           <Route path='olvide-password/:token' element={<RestartPass />}/>
         </Route>
       </Routes>
+      <Footer />
       <ToastContainer />
     </div>
   )

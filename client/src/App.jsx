@@ -26,6 +26,7 @@ import NavBarAdmin from './components/navBar/NavBarAdmin';
 import Categorias from './pages/client/Categorias';
 import CartProducts from './pages/client/CartProducts';
 import Footer from './components/footer/Footer';
+import Favoritos from './pages/client/Favoritos';
 
 
 function App() {
@@ -62,6 +63,7 @@ function App() {
           <Route path='/categoria/:id' element={<Categorias />}/>
           <Route path='/producto/:id' element={<DetailProduct />} />
           <Route path='/carrito' element={<CartProducts />} />
+          <Route path='/favoritos' element={<Favoritos />} />
         </Route>
         <Route path='/login' element={<AuthLayout />} >
           <Route index element={<Login />}/>

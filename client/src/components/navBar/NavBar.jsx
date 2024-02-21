@@ -95,7 +95,7 @@ const NavBar = ({ categorias }) => {
           <Link className="" to='/favoritos'><HeartIcon color={'fill-white hover:fill-violet-500'} clase={'fill-none'} svgClase={'fill-none'}/></Link>
           <button onClick={()=>setPerfil(!perfil)} className="">
             <ProfileIcon />
-            <div className={!perfil ? "hidden" : 'absolute z-10 right-0 top-16 bg-gray-800 py-4'}>
+            <div className={!perfil ? "hidden" : 'absolute z-50 right-0 top-16 bg-gray-800 py-4'}>
               {user.id ? (
                 <div className="flex flex-col gap-y-2">
                   <DivArrowIcon clase={'-rotate-90 absolute -top-3 right-[30px]'} />

@@ -9,6 +9,7 @@ export const FIND_PRODUCTO = "FIND_PRODUCTO";
 export const ADD_CART = "ADD_CART";
 export const DELETE_CART = "DELETE_CART";
 export const ADD_FAVORITO = "ADD_FAVORITO";
+export const CLOSE_SESION = "CLOSE_SESION";
 
 const URL_PRODUCTOS = "/productos";
 const URL_CATEGORIAS = "/categorias/";
@@ -109,4 +110,8 @@ export const addFavorito = (id, productoId) => {
       console.log(error);
     }
   }
+}
+
+export const closeSesion = () =>{
+  return {type: CLOSE_SESION, payload: {}}
 }

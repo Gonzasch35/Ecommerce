@@ -33,19 +33,24 @@ function App() {
   const navigate = useLocation()
   //hola
   const categorias = useSelector(state=> state.categorias)
+  const user = useSelector(state=> state.user)
+
   const dispatch = useDispatch()
   const [auth, setAuth] = useState({})
   
-
+    /*  */
     useEffect(()=> {
         dispatch(get_productos())
         dispatch(get_categorias())
         const token = localStorage.getItem('token')
+        
+        console.log(token);
         if(!token){
           return
         } else {
           dispatch(autenticarUsuario(token))
         }     
+        
     }, [])
 
   return (

@@ -7,7 +7,8 @@ import {
   FIND_PRODUCTO,
   ADD_CART,
   DELETE_CART,
-  ADD_FAVORITO
+  ADD_FAVORITO,
+  CLOSE_SESION
 } from "./actions";
 
 let initialState = {
@@ -46,6 +47,8 @@ const rootReducer = (state = initialState, action) => {
       return {...state, user: {...state.user, cart: action.payload}}
     case ADD_FAVORITO:
       return {...state, user: {...state.user, productos: action.payload}}
+    case CLOSE_SESION:
+      return {...state, user: action.payload}  
     default:
       return {
         ...state,

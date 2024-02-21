@@ -7,6 +7,7 @@ import Productos from "../../components/productos/Productos"
 const Home = () => {
 
     const productos = useSelector(state=> state.productos)
+    
     const dispatch = useDispatch()
 
     useEffect(() => {

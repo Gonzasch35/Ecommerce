@@ -30,7 +30,7 @@ const Producto = ({producto, fav}) => {
             <div className="max-w-xs rounded-lg bg-white p-3 shadow duration-150 hover:shadow-md relative group">
               {isFav ? <button onClick={()=>handleFavorito(producto.id)} className='z-20 absolute top-3 right-3'>
                   <HeartIcon color={'fill-violet-600 stroke-violet-800'} clase={'fill-white shadow-2xl'} svgClase={"rounded-full"}/>
-              </button> : <button onClick={()=>handleFavorito(producto.id)} className='z-20 absolute top-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity'>
+              </button> : <button onClick={()=>handleFavorito(producto.id)} className='absolute top-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity'>
                   <HeartIcon color={'fill-white stroke-violet-800'} clase={'fill-white shadow-2xl'} svgClase={"rounded-full shadow-xl shadow-gray-400"}/>
               </button>}
               

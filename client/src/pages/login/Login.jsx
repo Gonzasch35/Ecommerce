@@ -1,9 +1,10 @@
 import axios from 'axios'
 import React from 'react'
 import { useState } from 'react'
-import { Link, Navigate, useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
-
+import { autenticarUsuario } from "../../redux/actions"
+import { useDispatch } from 'react-redux'
 const VITE_API_URL = import.meta.env.VITE_API_URL
 
 const Login = () => {
@@ -11,6 +12,7 @@ const Login = () => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const navigate = useNavigate()
+    const dispatch = useDispatch()
 
     const handleChange = (e) => {
         const name = e.target.name
@@ -20,22 +22,25 @@ const Login = () => {
         if(name === 'password') setPassword(value)
     }
 
-    const handlerSubmit = async e => {
+    const handlerSubmit = async (e) => {
       e.preventDefault()
 
       try {
-        const {data} = await axios.post(`${VITE_API_URL}/users/login`, {
+        const { data } = await axios.post(`${VITE_API_URL}/users/login`, {
           email: email,
           password: password
         })
+ 
         localStorage.setItem('token', data.token)
-        localStorage.setItem('cart')
+        /* localStorage.setItem('cart',) <- falta valor */
         toast.success('login correcto')
         setTimeout(() => {
+          dispatch(autenticarUsuario(data.token))
           navigate('/')
-        }, 2000);
+        }, 1000);
+
       } catch (error) {
-        toast.error(error.response.data.error)
+        toast.error(error) 
       }
     }
 

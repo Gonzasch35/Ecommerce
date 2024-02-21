@@ -1,9 +1,9 @@
 import logo from "../../assets/breaking_bad.png";
-import { filter_product,findProduct } from "../../redux/actions";
+import { filter_product,findProduct,closeSesion } from "../../redux/actions";
 import { useDispatch, useSelector } from "react-redux";
 import heart from "../../assets/heart.png";
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import CartIcon from "../icons/CartIcon";
 import HeartIcon from "../icons/HeartIcon";
 import ProfileIcon from "../icons/ProfileIcon";
@@ -19,6 +19,7 @@ const NavBar = ({ categorias }) => {
   const [cat, setCat] = useState(false)
   const [menu, setMenu] = useState(false)
 
+
   const handleClick = (id) => {
     dispatch(filter_product(id));
   };
@@ -31,6 +32,15 @@ const NavBar = ({ categorias }) => {
     e.preventDefault();
     dispatch(findProduct(findData));
   }
+
+  const handleCloseSesion = (e  ) =>{
+    
+    setPerfil(false)
+    localStorage.clear()
+    console.log(localStorage.getItem(token));
+    dispatch(closeSesion())
+    
+  } 
 
   return (
     <nav className="bg-gray-900 flex flex-col justify-center md:items-center py-3 gap-3">
@@ -90,7 +100,6 @@ const NavBar = ({ categorias }) => {
         </div>
 
         <div className="md:flex gap-3 justify-center items-center hidden">
-
           <Link to="/carrito"><CartIcon color={'white'} clase={'hover:scale-105'} cart={user ? user.cart?.length : 0}/></Link>
           <Link className="" to='/favoritos'><HeartIcon color={'fill-white hover:fill-violet-500'} clase={'fill-none'} svgClase={'fill-none'}/></Link>
           <button onClick={()=>setPerfil(!perfil)} className="">
@@ -104,7 +113,7 @@ const NavBar = ({ categorias }) => {
                   <Link 
                     onClick={()=>setPerfil(false)} to='/perfil' className="block w-32 text-white hover:text-violet-500 md:p-0">Mis compras</Link>
                   <Link
-                    onClick={()=>setPerfil(false)}
+                    onClick={()=> handleCloseSesion()}
                     to="/"
                     className="block w-32 text-white hover:bg-gray-100 hover:text-black hover:bg-transparent md:hover:text-violet-500 md:p-0"
                   >
@@ -123,6 +132,7 @@ const NavBar = ({ categorias }) => {
             </div>
           </button>
         </div>
+        
       </div>
       <div>
       <ul className="flex flex-col font-medium md:p-0 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 bg-transparent md:text-white">

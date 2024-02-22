@@ -7,7 +7,7 @@ const {addProducto, deleteToCart} = require('../controllers/controllerUser')
 const getAllUsers = async (req,res) => {
     try {
         const users = await User.findAll({
-            attributes: ['id', 'name', 'email', 'phone', 'admin', 'token', 'cart', 'productos'],
+            attributes: ['id', 'name', 'email', 'phone', 'admin', 'token', 'cart'/* , 'productos' */],
             include: [
                 {
                   model: Producto,
@@ -108,6 +108,48 @@ const loginUser = async (req, res) => {
 }
 
 const addFavorito = async (req, res) => {
+    const { id } = req.params;
+    const { productoId } = req.body;
+    try {
+        const usuario = await User.findByPk(id, {
+            include: [
+                {
+                    model: Producto,
+                },
+            ],
+        });
+        if (!usuario) throw Error('No existe el usuario');
+
+        const findProducto = await Producto.findByPk(productoId);
+        if (!findProducto) throw Error('No existe el producto');
+
+        // Verificar si el producto ya está en la lista de favoritos
+        const isFavorito = usuario.productos.some(producto => producto.id === productoId);
+        
+        if (isFavorito) {
+            // Si el producto ya es favorito, lo eliminamos
+            await usuario.removeProductos(findProducto);
+        } else {
+            // Si el producto no es favorito, lo agregamos
+            await usuario.addProductos(findProducto);
+        }
+        
+        // Devolvemos la lista actualizada de productos
+        const updatedUsuario = await User.findByPk(id, {
+            include: [
+                {
+                    model: Producto,
+                },
+            ],
+        });
+        res.status(200).json(updatedUsuario.productos);
+
+    } catch (error) {
+        res.status(400).json({ error: error.message });
+    }
+};
+
+/* const addFavorito = async (req, res) => {
     const {id} = req.params
     const {productoId} = req.body
     try {
@@ -124,6 +166,14 @@ const addFavorito = async (req, res) => {
         if(!findProducto) throw Error('No existe el producto')
 
         const add = await usuario.addProductos(findProducto)
+        if(!add){
+            await usuario.removeProductos(findProducto)
+            return res.status(200).json(usuario.productos)
+        } else {
+            await usuario.addProductos(findProducto)
+            return res.status(200).json(usuario.productos)
+        }
+
         if(!add) {
             await usuario.removeProductos(findProducto)
             res.status(200).json(usuario.productos)
@@ -135,7 +185,7 @@ const addFavorito = async (req, res) => {
     } catch (error) {
         res.status(400).json({error: error.message})
     }
-}
+} */
 
 const addProductToCart = async (req,res) => {
     const {id} = req.params

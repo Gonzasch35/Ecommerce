@@ -1,12 +1,26 @@
-import React, { useEffect } from "react";
-import { useSelector } from "react-redux";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import basura from "../../assets/eliminar.png";
+import { addFavorito } from "../../redux/actions";
 
 const Favoritos = () => {
   const user = useSelector((state) => state.user);
   const favorites = user.productos;
   console.log(favorites);
+  const dispatch = useDispatch();
+  const [loading, setLoading] = useState(false);
+
+  const handleDeleteFav = async (id) => {
+    setLoading(true); // Mostrar loader al hacer clic en el botón de eliminar
+    try {
+      await dispatch(addFavorito(user.id, { productoId: id }));
+      setLoading(false); // Ocultar loader una vez completada la operación
+    } catch (error) {
+      console.error("Error al eliminar el favorito:", error);
+      setLoading(false); // En caso de error, asegurarse de ocultar el loader
+    }
+  };
 
   return (
     <div className="m-auto p-10">
@@ -22,7 +36,10 @@ const Favoritos = () => {
       {favorites?.length
         ? favorites?.map((producto) => {
             return (
-              <div className="bg-white w-3/4 my-16 mx-auto border-2 border-gray-300 p-10 relative">
+              <div
+                key={producto.id}
+                className="bg-white w-3/4 my-16 mx-auto border-2 border-gray-300 p-10 relative"
+              >
                 <div className="flex flex-row justify-around items-center">
                   <div className="w-40">
                     <img className="" src={producto.imagen[0]} alt="" />
@@ -36,12 +53,18 @@ const Favoritos = () => {
                     <h4>{producto.precio}</h4>
                   </div>
                 </div>
-                <img
-                  className="absolute top-5 right-5"
-                  src={basura}
-                  alt={basura}
-                  width="25"
-                />
+                <button onClick={() => handleDeleteFav(producto.id)}>
+                  {loading ? (
+                    <div className="absolute top-5 right-5">Loading...</div>
+                  ) : (
+                    <img
+                      className="absolute top-5 right-5 hover:scale-110"
+                      src={basura}
+                      alt={basura}
+                      width="25"
+                    />
+                  )}
+                </button>
               </div>
             );
           })

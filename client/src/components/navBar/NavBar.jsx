@@ -1,9 +1,8 @@
 import logo from "../../assets/breaking_bad.png";
 import { filter_product,findProduct,closeSesion } from "../../redux/actions";
 import { useDispatch, useSelector } from "react-redux";
-import heart from "../../assets/heart.png";
 import { Link } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import CartIcon from "../icons/CartIcon";
 import HeartIcon from "../icons/HeartIcon";
 import ProfileIcon from "../icons/ProfileIcon";
@@ -18,6 +17,25 @@ const NavBar = ({ categorias }) => {
   const [perfil, setPerfil] = useState(false)
   const [cat, setCat] = useState(false)
   const [menu, setMenu] = useState(false)
+  const perfilRef = useRef(null);
+  const catRef = useRef(null);
+
+  useEffect(() => {
+      const handleClickOutside = (event) => {
+          if (perfilRef.current && !perfilRef.current.contains(event.target)) {
+              setPerfil(false);
+          }
+          if (catRef.current && !catRef.current.contains(event.target)) {
+            setCat(false);
+        }
+      };
+
+      document.addEventListener('mousedown', handleClickOutside);
+      return () => {
+          document.removeEventListener('mousedown', handleClickOutside);
+      };
+  }, [perfilRef, catRef]);
+
 
 
   const handleClick = (id) => {
@@ -102,9 +120,10 @@ const NavBar = ({ categorias }) => {
         <div className="md:flex gap-3 justify-center items-center hidden">
           <Link to="/carrito"><CartIcon color={'white'} clase={'hover:scale-105'} cart={user ? user.cart?.length : 0}/></Link>
           <Link className="" to='/favoritos'><HeartIcon color={'fill-white hover:fill-violet-500'} clase={'fill-none'} svgClase={'fill-none'}/></Link>
-          <button onClick={()=>setPerfil(!perfil)} className="">
+          <button
+            onClick={()=>setPerfil(!perfil)} className="">
             <ProfileIcon />
-            <div className={!perfil ? "hidden" : 'absolute z-50 right-0 top-16 bg-gray-800 py-4'}>
+            <div ref={perfilRef} className={!perfil ? "hidden" : 'absolute z-50 right-0 top-16 bg-gray-800 py-4'}>
               {user.id ? (
                 <div className="flex flex-col gap-y-2">
                   <DivArrowIcon clase={'-rotate-90 absolute -top-3 right-[30px]'} />
@@ -160,6 +179,7 @@ const NavBar = ({ categorias }) => {
               </button>
               {/* <!-- Dropdown menu --> */}
               <div
+                ref={catRef}
                 className={cat ? " absolute z-10 marker:font-normal bg-gray-900 divide-y divide-gray-100 rounded-lg  shadow w-44 " : 'hidden'}
               >
                 <ul

@@ -31,13 +31,14 @@ import Favoritos from './pages/client/Favoritos';
 
 function App() {
 
-  const navigate = useLocation()
+  const location = useLocation()
   //hola
   const categorias = useSelector(state=> state.categorias)
   const user = useSelector(state=> state.user)
 
   const dispatch = useDispatch()
   const [auth, setAuth] = useState({})
+  const navigate = useNavigate()
   
     /*  */
     useEffect(()=> {
@@ -48,13 +49,14 @@ function App() {
           return
         } else {
           dispatch(autenticarUsuario(token))
-        }     
-        
+        }
     }, [])
+
+    
 
   return (
     <div className='bg-gray-100'> 
-      {navigate.pathname.startsWith('/admin') ?  <NavBarAdmin /> : <NavBar categorias={categorias} />}
+      {location.pathname.startsWith('/admin') ?  <NavBarAdmin /> : <NavBar categorias={categorias} />}
       
       <Routes>
         <Route path='/admin' element={<Admin />}>

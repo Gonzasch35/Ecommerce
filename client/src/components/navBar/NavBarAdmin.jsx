@@ -1,14 +1,18 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import logo from "../../assets/breaking_bad.png";
 import MenuIcon from '../icons/MenuIcon';
 import { useState } from 'react';
 import CloseIcon from '../icons/CloseIcon';
 import ArrowIcon from '../icons/ArrowIcon';
+import { closeSesion } from '../../redux/actions';
+import { useDispatch } from 'react-redux';
 
 const NavBarAdmin = () => {
 
   const [menu, setMenu] = useState(false)
   const [crear, setCrear] = useState(false)
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
 
   const handleClickMenu = () => {
     setMenu(!menu)
@@ -17,6 +21,13 @@ const NavBarAdmin = () => {
   const handleClickCrear = () => {
     setCrear(!crear)
   }
+
+  const handleCloseSesion = (e) =>{
+    dispatch(closeSesion())
+    navigate('/')
+    localStorage.clear()
+    console.log(localStorage.getItem(token));
+  } 
 
   return (
     <nav class="flex justify-between items-center bg-gray-900 px-8 py-5 md:px-32">
@@ -47,7 +58,7 @@ const NavBarAdmin = () => {
           </div>
           <ArrowIcon />
         </button>
-        <button className="mx-auto hover:text-violet-500">
+        <button onClick={()=> handleCloseSesion()} className="mx-auto hover:text-violet-500">
           Cerrar sesión
         </button>
       </div>

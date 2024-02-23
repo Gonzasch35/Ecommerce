@@ -51,7 +51,7 @@ const NavBar = ({ categorias }) => {
     dispatch(findProduct(findData));
   }
 
-  const handleCloseSesion = (e  ) =>{
+  const handleCloseSesion = (e) =>{
     
     setPerfil(false)
     localStorage.clear()

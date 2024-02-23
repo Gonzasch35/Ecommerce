@@ -8,6 +8,7 @@ import HeartIcon from "../icons/HeartIcon";
 import ProfileIcon from "../icons/ProfileIcon";
 import DivArrowIcon from "../icons/DivArrowIcon";
 import MenuIcon from "../icons/MenuIcon";
+import { useLocation } from 'react-router-dom'
 
 const NavBar = ({ categorias }) => {
   const user = useSelector((state) => state.user);
@@ -19,6 +20,7 @@ const NavBar = ({ categorias }) => {
   const [menu, setMenu] = useState(false)
   const perfilRef = useRef(null);
   const catRef = useRef(null);
+  const navigate = useLocation()
 
   useEffect(() => {
       const handleClickOutside = (event) => {
@@ -154,7 +156,7 @@ const NavBar = ({ categorias }) => {
         
       </div>
       <div>
-      <ul className="flex flex-col font-medium md:p-0 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 bg-transparent md:text-white">
+      <ul className={`flex flex-col font-medium md:p-0 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 bg-transparent md:text-white ${navigate.pathname.includes("/producto")? "hidden" : ""}`}>
             <li>
               <button
                 onClick={()=>setCat(!cat)}
@@ -185,6 +187,7 @@ const NavBar = ({ categorias }) => {
                 <ul
                   className="py-2 text-sm text-gray-700 dark:text-gray-200"
                 >
+                <Link to={"/"} className="block px-4 text-white py-2 hover:bg-violet-800">Todas</Link>
                   {categorias?.map((categoria) => {
                     return (
                       <li key={categoria.id}>

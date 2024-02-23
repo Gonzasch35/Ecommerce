@@ -41,11 +41,9 @@ function App() {
   
     /*  */
     useEffect(()=> {
-        dispatch(get_productos())
         dispatch(get_categorias())
         const token = localStorage.getItem('token')
         
-        console.log(token);
         if(!token){
           return
         } else {
@@ -61,7 +59,7 @@ function App() {
       <Routes>
         <Route path='/admin' element={<Admin />}>
           <Route index element={<DashboardAdmin />}/>
-          <Route path='crear-producto' element={<CreateProducto />}/>
+        <Route path='crear-producto' element={<CreateProducto />}/>
         </Route>
         <Route path='/' element={<Landing />}>
           <Route index element={<Home />}/>

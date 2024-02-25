@@ -27,6 +27,7 @@ import Categorias from './pages/client/Categorias';
 import CartProducts from './pages/client/CartProducts';
 import Footer from './components/footer/Footer';
 import Favoritos from './pages/client/Favoritos';
+import Profile from './pages/client/Profile/Profile';
 
 
 function App() {
@@ -69,6 +70,7 @@ function App() {
           <Route path='/producto/:id' element={<DetailProduct />} />
           <Route path='/carrito' element={<CartProducts />} />
           <Route path='/favoritos' element={<Favoritos />} />
+          <Route path='/perfil' element={<Profile />} />
         </Route>
         <Route path='/login' element={<AuthLayout />} >
           <Route index element={<Login />}/>

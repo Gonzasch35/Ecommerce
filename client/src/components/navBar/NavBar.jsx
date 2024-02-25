@@ -9,6 +9,7 @@ import ProfileIcon from "../icons/ProfileIcon";
 import DivArrowIcon from "../icons/DivArrowIcon";
 import MenuIcon from "../icons/MenuIcon";
 import { useLocation } from 'react-router-dom'
+import CloseIcon from "../icons/CloseIcon";
 
 const NavBar = ({ categorias }) => {
   const user = useSelector((state) => state.user);
@@ -72,9 +73,17 @@ const NavBar = ({ categorias }) => {
               Indumentaria
             </span>
           </a>
-          <button onClick={()=>setMenu(!menu)} className="block md:hidden">
-            <MenuIcon />
-          </button>
+          {
+            menu ? 
+            <button onClick={()=>setMenu(!menu)} className="block md:hidden z-10 mr-2">
+              <CloseIcon />
+            </button>
+            :
+            <button onClick={()=>setMenu(!menu)} className="block md:hidden">
+              <MenuIcon />
+            </button>
+            
+          }
         </div>
 
         
@@ -119,13 +128,13 @@ const NavBar = ({ categorias }) => {
           </form>
         </div>
 
-        <div className="md:flex gap-3 justify-center items-center hidden">
+        <div className={menu ? 'md:flex gap-3 md:justify-center md:items-center absolute flex flex-col h-full justify-start  right-0 top-0 bg-violet-800 p-5 pt-20' : 'md:flex gap-3 justify-center items-center hidden'}>
           <Link to="/carrito"><CartIcon color={'white'} clase={'hover:scale-105'} cart={user ? user.cart?.length : 0}/></Link>
           <Link className="" to='/favoritos'><HeartIcon color={'fill-white hover:fill-violet-500'} clase={'fill-none'} svgClase={'fill-none'}/></Link>
           <button
             onClick={()=>setPerfil(!perfil)} className="">
             <ProfileIcon />
-            <div ref={perfilRef} className={!perfil ? "hidden" : 'absolute z-50 right-0 top-16 bg-gray-800 py-4'}>
+            <div ref={perfilRef} className={!perfil ? "hidden" : 'absolute z-50 md:right-0 md:top-16 right-16 top-40 bg-violet-800 py-4'}>
               {user.id ? (
                 <div className="flex flex-col gap-y-2">
                   <DivArrowIcon clase={'-rotate-90 absolute -top-3 right-[30px]'} />

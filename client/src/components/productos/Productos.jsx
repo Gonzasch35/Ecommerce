@@ -11,10 +11,10 @@ const Productos = ({productos}) => {
   useEffect(()=>{
     setTimeout(()=>{
       setData(true);
-    },500)
+    },2000)
 
     setData(false)
-  },[productos])
+  },[])
 
   return (
     <div className="flex flex-wrap py-10 gap-2 min-h-screen items-center justify-center bg-gray-100">

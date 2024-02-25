@@ -25,9 +25,9 @@ const Producto = ({producto, fav}) => {
   }
 
   return (
-    <div className='h-min-52'>
+    <div className='h-min-52 my-2 '>
         <div className="mx-auto px-5">
-            <div className="max-w-xs rounded-lg bg-white p-3 shadow duration-150 hover:shadow-md relative group">
+            <div className="hover:scale-105 max-w-xs rounded-lg bg-white p-3 shadow duration-150 hover:shadow-md relative group">
               {isFav ? <button onClick={()=>handleFavorito(producto.id)} className='z-20 absolute top-3 right-3'>
                   <HeartIcon color={'fill-violet-600 stroke-violet-800'} clase={'fill-white shadow-2xl'} svgClase={"rounded-full"}/>
               </button> : <button onClick={()=>handleFavorito(producto.id)} className='absolute top-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity'>
